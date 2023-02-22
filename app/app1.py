@@ -20,6 +20,18 @@ import plotly.express as px
 import time
 import sys
 import streamlit
+#import geopandas as gpd
+import geopy
+from geopy.geocoders import Nominatim
+from geopy.extra.rate_limiter import RateLimiter
+import matplotlib.pyplot as plt
+import folium
+from folium.plugins import FastMarkerCluster
+from streamlit_folium import folium_static
+import folium
+from geopy.extra.rate_limiter import RateLimiter
+import numpy as np
+from streamlit_folium import folium_static
 # nltk.download('punkt')
 # nltk.download('stopwords')
 # nltk.download('wordnet')
@@ -212,9 +224,11 @@ def app():
         final_df = final_df.sort_values(by="Final", ascending=False)
         final_df.fillna('Not Available', inplace=True)
 
+        result_jd = final_df
+        final_jobrecomm =result_jd.head(no_of_jobs)
 
 
-        st.dataframe(final_df)
+        # st.dataframe(final_jobrecomm)
         # df_fin = final2.merge(df, on="JobID")
         def Job_recomm(x):
             final_ = final[['JobID','company','positionName','description','salary','location','rating', 'postedAt', 'externalApplyLink']]
@@ -226,6 +240,155 @@ def app():
         # result_jd = final
         # final_jobrecomm =result_jd.head(no_of_jobs)
 
+#<<<<<<<<<<<<<<<<<<VISUALIZATION>>>>>>>>>>>>>>>>>>>>>>>
+
+        df3 = final_jobrecomm.copy()
+        rec_loc = df3.location.value_counts()
+        locations_df = pd.DataFrame(rec_loc)
+        locations_df.reset_index(inplace=True)
+
+        locations_df['index'] = locations_df['index'].apply(lambda x: x.replace("Area", "") if "Area" in x else x)
+
+        #Adding request limit as 1 to follow guidelines
+        locator = Nominatim(user_agent="myGeocoder")
+        geocode = RateLimiter(locator.geocode, min_delay_seconds=1) #1 second per api request
+
+        #Extracting lat, long, alt
+        locations_df['loc_geo'] = locations_df['index'].apply(geocode)
+        locations_df['point'] = locations_df['loc_geo'].apply(lambda loc: tuple(loc.point) if loc else None)
+
+        # split point column into latitude, longitude and altitude columns
+        locations_df[['latitude', 'longitude', 'altitude']] = pd.DataFrame(locations_df['point'].tolist(), index=locations_df.index)
+
+        #dropping any null values from lat / long
+        locations_df.dropna(subset=['latitude'], inplace=True)
+        locations_df.dropna(subset=['longitude'], inplace=True)
+
+        #Set start location for map
+        folium_map = folium.Map(location=[12.9767936, 77.590082],
+                                zoom_start=11,
+                                tiles= "cartodbdark_matter")
+        #Adding points to map
+        for lat, lon, ind, job_no in zip(locations_df['latitude'], locations_df['longitude'], locations_df['index'], locations_df['location']):
+            label = folium.Popup("Area: " + ind + "<br> Number of Jobs: " + str(job_no), max_width=500)
+            folium.CircleMarker(
+                [lat, lon],
+                radius=10,
+                popup=label,
+                fill = True,
+                color='cadetblue',
+                fill_col = "lightblue",
+                icon_size = (150,150),
+                ).add_to(folium_map)
+
+        # qualification bar chart
+        db_expander = st.expander(label='CV dashboard:')
+        with db_expander:
+            available_locations = df3.location.value_counts().sum()
+            all_locations = df3.location.value_counts().sum() + df3.location.isnull().sum()
+            st.write("**JOB LOCATIONS FROM**", available_locations, "**OF**", all_locations, "**JOBS**")
+
+            folium_static(folium_map, width=2000)
+
+            chart1, chart2, chart3 = st.columns(3)
+
+            with chart1:
+                rating_count = final_jobrecomm.rating.count()
+                count_with_null = final_jobrecomm.rating.count() + final_jobrecomm.rating.isnull().sum()
+                st.write("**RATINGS COUNT : **", rating_count, "**OF**", count_with_null, "**JOBS**")
+                # fig, ax = plt.subplots()
+                # ax = sns.countplot(y=final_jobrecomm['industry'], data=final_jobrecomm, palette="Set3")
+                # # ax = px.histogram(final_jobrecomm, x="industry")
+                # st.pyplot(fig)
+
+                rating_count = final_jobrecomm.rating.value_counts()
+                rating = pd.DataFrame(rating_count)
+                rating.reset_index(inplace=True)
+                rating.rename({'index': 'rating', 'rating': 'Count'}, axis=1, inplace=True)
+                fig = px.pie(rating, values = "Count", names = "rating", width=600)
+                fig.update_layout(showlegend=True)
+                # st.write(fig)
+                st.plotly_chart(fig, use_container_width=True)
+            
+            with chart2:
+
+                final_salary = final_jobrecomm.copy()
+
+                salary_range = []
+                for i in final_salary['salary']:
+                    x = re.findall('[0-9,]+', str(i))
+                    for j in x:
+                        salary_range.append(int(j.replace(",",'')))
+                        salary_range = [i for i in salary_range if i != 0]
+                        salary_range = sorted(salary_range)
+                
+                salary_df = pd.DataFrame(salary_range, columns=['Salary Range'])
+                
+                sal_count = salary_df['Salary Range'].count() 
+                
+                st.write(" **SALARY RANGE FROM**", sal_count, "**SALARY VALUES PROVIDED**")
+                
+        
+                fig2 = px.box(salary_df, y= "Salary Range", width=500)
+                fig2.update_yaxes(showticklabels=True, )
+                fig2.update_xaxes(visible=True, showticklabels=True)
+                # st.write(fig2)
+                st.plotly_chart(fig2, use_container_width=True)
+
+            with chart3:
+                reviews_Count = final_jobrecomm.reviewsCount.count()
+                count_with_null = final_jobrecomm.reviewsCount.count() + final_jobrecomm.reviewsCount.isnull().sum()
+                st.write("**REVIEWS COUNT : **", reviews_Count, "**OF**", count_with_null, "**JOBS**")
+                # fig, ax = plt.subplots()
+                # ax = sns.countplot(y=final_jobrecomm['industry'], data=final_jobrecomm, palette="Set3")
+                # # ax = px.histogram(final_jobrecomm, x="industry")
+                # st.pyplot(fig)
+
+                reviews_Count = final_jobrecomm.reviewsCount.value_counts()
+                reviewsCount = pd.DataFrame(reviews_Count)
+                reviewsCount.reset_index(inplace=True)
+                reviewsCount.rename({'index': 'reviewsCount', 'reviewsCount': 'Count'}, axis=1, inplace=True)
+                fig = px.pie(reviewsCount, values = "Count", names = "reviewsCount", width=600)
+                fig.update_layout(showlegend=True)
+                # st.write(fig)
+                st.plotly_chart(fig, use_container_width=True)
+                            
+        # expander for jobs df ---------------------------display#
+        db_expander = st.expander(label='Job Recommendations:')
+
+        final_jobrecomm = final_jobrecomm.replace(np.nan, "Not Provided")
+
+        def make_clickable(link):
+            # target _blank to open new window
+            # extract clickable text to display for your link
+            text = 'more details'
+            return f'<a target="_blank" href="{link}">{text}</a>'
+
+        with db_expander:
+        #    final1=st.dataframe(final[['title','career level','company','location','industry']].head(no_of_jobs))
+
+    #        def Job_recomm(x):
+    #            final_ = final[['title','career level','company','location','industry']]
+    #            cl_select = final_[final_["career level"]==x]
+    #            return cl_select
+    #
+    #        result_jd = Job_recomm(CL)
+            #st.table(final_jobrecomm.drop(['JobID', "KNN", "TF-IDF", "CV", "webpage","Final"], axis=1))
+            final_jobrecomm['externalApplyLink'] = final_jobrecomm['externalApplyLink'].apply(make_clickable)
+            final_jobrecomm['url'] = final_jobrecomm['url'].apply(make_clickable)
+            # final_jobrecomm['salary'].replace({"0":"Not Available"}, inplace=True)
+            final_df=final_jobrecomm[['company','positionName_x','description','location','salary', 'rating', 'reviewsCount', "externalApplyLink", 'url']]
+            final_df.rename({'company': 'Company', 'positionName_x': 'Position Name', 'description' : 'Job Description', 'location' : 'Location', 'salary' : 'Salary', 'rating' : 'Company Rating', 'reviewsCount' : 'Company ReviewCount', 'externalApplyLink': 'Web Apply Link', 'url': 'Indeed Apply Link' }, axis=1, inplace=True)
+            # [i for i in salary_range if i != 0]
+            # link is the column with hyperlinks
+            
+            show_df = final_df.to_html(escape=False)
+            st.write(show_df, unsafe_allow_html=True)
+            
+            
+            
+        st.balloons()
+         
 
 if __name__ == '__main__':
         app()
