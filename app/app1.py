@@ -281,12 +281,12 @@ def app():
 
             folium_static(folium_map, width=2000)
 
-            chart2, chart3 = st.columns(2,gap="medium")
+            chart2, chart3,chart1 = st.columns(3)
 
             with chart3:
-                rating_count2 = final_jobrecomm.rating.count()
-                count_with_null2 = final_jobrecomm.rating.count() + final_jobrecomm.rating.isnull().sum()
-                st.write(" **RATINGS COUNT**", rating_count2, " **OF**", count_with_null2, " **JOBS**")
+                #rating_count2 = final_jobrecomm.rating.count()
+                #count_with_null2 = final_jobrecomm.rating.count() + final_jobrecomm.rating.isnull().sum()
+                st.write(" **RATINGS W.R.T Company **",)
 
 
                 # rating_count = final_jobrecomm.rating.value_counts()
@@ -328,9 +328,9 @@ def app():
                     return y,m
 
             with chart2:
-                reviews_Count1 = final_jobrecomm.reviewsCount.count()
-                count_with_null1 = final_jobrecomm.reviewsCount.count() + final_jobrecomm.reviewsCount.isnull().sum()
-                st.write(" **REVIEWS COUNT**", reviews_Count1, " **OF**", count_with_null1, " **JOBS**")
+                #reviews_Count1 = final_jobrecomm.reviewsCount.count()
+                #count_with_null1 = final_jobrecomm.reviewsCount.count() + final_jobrecomm.reviewsCount.isnull().sum()
+                st.write(" **REVIEWS COUNT W.R.T Company**",)
                 # reviews_Count = final_jobrecomm.reviewsCount.value_counts()
                 # reviewsCount = pd.DataFrame(reviews_Count)
                 # reviewsCount.reset_index(inplace=True)
@@ -344,24 +344,9 @@ def app():
                 fig.update_layout(showlegend=True)
                 st.plotly_chart(fig, use_container_width=True,)
 
-            chart1,chart4,=st.columns(2)
-            with chart1:
-                location_Count1 = final_jobrecomm.location.count()
-                count_with_null3 = final_jobrecomm.location.count() + final_jobrecomm.location.isnull().sum()
-                st.write(" **LOCATION COUNT**", location_Count1, " **OF**", count_with_null3, " **JOBS**")
-                # reviews_Count = final_jobrecomm.reviewsCount.value_counts()
-                # reviewsCount = pd.DataFrame(reviews_Count)
-                # reviewsCount.reset_index(inplace=True)
-                # reviewsCount.rename({'index': 'reviewsCount', 'reviewsCount': 'Count'}, axis=1, inplace=True)
-                # fig = px.pie(reviewsCount, values = "Count", names = "reviewsCount", width=600)
-                # fig.update_layout(showlegend=True)
-                # st.plotly_chart(fig, use_container_width=True)
 
-                location_count = final_jobrecomm[["location","company"]]
-                fig = px.pie(location_count, values = "location", names = "company", width=600)
-                fig.update_layout(showlegend=True)
-                st.plotly_chart(fig, use_container_width=True,)
-            with chart4:
+
+            with chart1:
 
 
                 final_salary = final_jobrecomm.copy()
@@ -394,6 +379,8 @@ def app():
             return f'<a target="_blank" href="{link}">{text}</a>'
 
         with db_expander:
+            def convert_df(df):
+                return df.to_csv(index=False).encode('utf-8')
        
             final_jobrecomm['externalApplyLink'] = final_jobrecomm['externalApplyLink'].apply(make_clickable)
             final_jobrecomm['url'] = final_jobrecomm['url'].apply(make_clickable)
@@ -401,7 +388,10 @@ def app():
             final_df=final_jobrecomm[['company','positionName_x','description','location','salary', 'rating', 'reviewsCount', "externalApplyLink", 'url']]
             final_df.rename({'company': 'Company', 'positionName_x': 'Position Name', 'description' : 'Job Description', 'location' : 'Location', 'salary' : 'Salary', 'rating' : 'Company Rating', 'reviewsCount' : 'Company ReviewCount', 'externalApplyLink': 'Web Apply Link', 'url': 'Indeed Apply Link' }, axis=1, inplace=True)
             show_df = final_df.to_html(escape=False)
-            st.write(show_df, unsafe_allow_html=True)               
+            st.write(show_df, unsafe_allow_html=True)    
+
+        csv=convert_df(final_df)
+        st.download_button("Press to Download",csv,"file.csv","text/csv",key='download-csv')           
         st.balloons()
         #st.snow()
          
