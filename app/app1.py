@@ -32,11 +32,12 @@ import folium
 from geopy.extra.rate_limiter import RateLimiter
 import numpy as np
 from streamlit_folium import folium_static
-# nltk.download('punkt')
-# nltk.download('stopwords')
-# nltk.download('wordnet')
-#%%
-# Ignore warning
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.neighbors import NearestNeighbors
+
+
 st.set_option('deprecation.showPyplotGlobalUse', False)
 # set wide layout
 st.set_page_config(layout="wide")
@@ -58,9 +59,13 @@ def app():
     # upload cv + turn pdf to text------------------display##
     cv=c1.file_uploader('Upload your CV', type='pdf')
     # career level
-    levels = ["Entry Level","Middle", "Senior", "Top", "Not Specified"]
-    CL = c2.multiselect('Career level', levels, levels)
-        
+    job_loc=pd.read_csv("all_locations.csv")
+    all_locations=list(job_loc["location"].dropna().unique())
+
+    RL = c2.multiselect('Filter', all_locations )
+    #print(RL[0])
+   
+ 
     # number of job recommend slider------------------display##
     no_of_jobs = st.slider('Number of Job Recommendations:', min_value=20, max_value=100, step=10)
 
@@ -109,7 +114,8 @@ def app():
             url='preprocessed_jobs.csv'
             return pd.read_csv(url)
         df= get_jobcsv()
-
+  
+       
         # recommendation function
         @st.cache_data
         def get_recommendation(top, df_all, scores):
@@ -129,8 +135,7 @@ def app():
             return recommendation
 
 
-        from sklearn.metrics.pairwise import cosine_similarity
-        from sklearn.feature_extraction.text import TfidfVectorizer
+
 
         @st.cache_data
         def TFIDF(scraped_data, cv):
@@ -174,8 +179,7 @@ def app():
         cv=get_recommendation(top, df, list_scores)
 
         # KNN function
-        from sklearn.neighbors import NearestNeighbors
-
+    
         @st.cache_data   
         def KNN(scraped_data, cv):
             tfidf_vectorizer = TfidfVectorizer(stop_words='english')
@@ -189,15 +193,12 @@ def app():
             return knn
         knn = KNN(df['All'], df2['All'])
 
-         ############ SHOW KNN
-        #%%
         # Combine 3 methods into a dataframe
         merge1 = knn[['JobID','positionName', 'score']].merge(TF[['JobID','score']], on= "JobID")
         final = merge1.merge(cv[['JobID','score']], on = "JobID")
         final = final.rename(columns={"score_x": "KNN", "score_y": "TF-IDF","score": "CV"})
         # final.head()
 
-        #%%
         
         # Scale it
         from sklearn.preprocessing import MinMaxScaler
@@ -211,34 +212,21 @@ def app():
         final['Final'] = final['KNN']+final['TF-IDF']+final['CV']
         final.sort_values(by="Final", ascending=False)
         
-        #job recommendations after career level & no. of jobs filter
-        # @st.cache
-        # def Job_recomm(x):
-        #     final_ = final[['JobID','title','career level','company','location','industry']]
-        #     st.dataframe(final_)
-        #     # cl_select = final_[final_["career level"]==CL]
-        #     st.dataframe(cl_select)
-        #     return cl_select
+
         final2 = final.sort_values(by="Final", ascending=False).copy()
         final_df = df.merge(final2, on="JobID" )
         final_df = final_df.sort_values(by="Final", ascending=False)
         final_df.fillna('Not Available', inplace=True)
 
         result_jd = final_df
+        if len(RL)==0:
+            result_jd = final_df    
+        else:
+
+             result_jd=result_jd[result_jd["location"].isin(list(RL))]
+
         final_jobrecomm =result_jd.head(no_of_jobs)
 
-
-        # st.dataframe(final_jobrecomm)
-        # df_fin = final2.merge(df, on="JobID")
-        def Job_recomm(x):
-            final_ = final[['JobID','company','positionName','description','salary','location','rating', 'postedAt', 'externalApplyLink']]
-            selected_levels = final_['career level'].isin(CL)
-            cl_select = final_[selected_levels]
-            return cl_select
-        
-        # result_jd = Job_recomm(CL)
-        # result_jd = final
-        # final_jobrecomm =result_jd.head(no_of_jobs)
 
 #<<<<<<<<<<<<<<<<<<VISUALIZATION>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -267,7 +255,8 @@ def app():
         #Set start location for map
         folium_map = folium.Map(location=[12.9767936, 77.590082],
                                 zoom_start=11,
-                                tiles= "cartodbdark_matter")
+                                tiles= "openstreetmap",)
+        
         #Adding points to map
         for lat, lon, ind, job_no in zip(locations_df['latitude'], locations_df['longitude'], locations_df['index'], locations_df['location']):
             label = folium.Popup("Area: " + ind + "<br> Number of Jobs: " + str(job_no), max_width=500)
@@ -276,7 +265,7 @@ def app():
                 radius=10,
                 popup=label,
                 fill = True,
-                color='cadetblue',
+                color='red',
                 fill_col = "lightblue",
                 icon_size = (150,150),
                 ).add_to(folium_map)
@@ -296,10 +285,6 @@ def app():
                 rating_count = final_jobrecomm.rating.count()
                 count_with_null = final_jobrecomm.rating.count() + final_jobrecomm.rating.isnull().sum()
                 st.write("**RATINGS COUNT : **", rating_count, "**OF**", count_with_null, "**JOBS**")
-                # fig, ax = plt.subplots()
-                # ax = sns.countplot(y=final_jobrecomm['industry'], data=final_jobrecomm, palette="Set3")
-                # # ax = px.histogram(final_jobrecomm, x="industry")
-                # st.pyplot(fig)
 
                 rating_count = final_jobrecomm.rating.value_counts()
                 rating = pd.DataFrame(rating_count)
@@ -309,48 +294,65 @@ def app():
                 fig.update_layout(showlegend=True)
                 # st.write(fig)
                 st.plotly_chart(fig, use_container_width=True)
-            
-            with chart2:
 
-                final_salary = final_jobrecomm.copy()
-
+         #   salary_converter (get salary from str)
+            @st.cache_data
+            def salary_converter(list_conv):
                 salary_range = []
-                for i in final_salary['salary']:
+                for i in list_conv:
                     x = re.findall('[0-9,]+', str(i))
                     for j in x:
                         salary_range.append(int(j.replace(",",'')))
                         salary_range = [i for i in salary_range if i != 0]
                         salary_range = sorted(salary_range)
-                
-                salary_df = pd.DataFrame(salary_range, columns=['Salary Range'])
-                
+                return salary_range
+
+
+            #get_monthly_yearly_salary
+            @st.cache_data
+            def get_monthly_yearly_salary(col):
+                    y=[]
+                    m=[]
+                    for i in col:
+                        if i.endswith('year'):
+                            y.append(i)
+                        else:
+                            m.append(i)
+                    return y,m
+
+            with chart2:
+
+
+                final_salary = final_jobrecomm.copy()
+
+           
+                col=final_salary["salary"].dropna().to_list()
+                y,m=get_monthly_yearly_salary(col)
+                yearly_salary_range=salary_converter(y)
+                monthly_salary_to_yearly=salary_converter(m)
+                final_salary=yearly_salary_range+monthly_salary_to_yearly
+                salary_df=pd.DataFrame(final_salary,columns=['Salary Range'])
                 sal_count = salary_df['Salary Range'].count() 
+
                 
                 st.write(" **SALARY RANGE FROM**", sal_count, "**SALARY VALUES PROVIDED**")
                 
         
-                fig2 = px.box(salary_df, y= "Salary Range", width=500)
-                fig2.update_yaxes(showticklabels=True, )
+                fig2 = px.box(salary_df, y= "Salary Range", width=500,title="Salary Range For The Given Job Profile")
+                fig2.update_yaxes(showticklabels=True,title="Salary Range in Rupees" )
                 fig2.update_xaxes(visible=True, showticklabels=True)
-                # st.write(fig2)
-                st.plotly_chart(fig2, use_container_width=True)
+                st.write(fig2)
 
             with chart3:
                 reviews_Count = final_jobrecomm.reviewsCount.count()
                 count_with_null = final_jobrecomm.reviewsCount.count() + final_jobrecomm.reviewsCount.isnull().sum()
                 st.write("**REVIEWS COUNT : **", reviews_Count, "**OF**", count_with_null, "**JOBS**")
-                # fig, ax = plt.subplots()
-                # ax = sns.countplot(y=final_jobrecomm['industry'], data=final_jobrecomm, palette="Set3")
-                # # ax = px.histogram(final_jobrecomm, x="industry")
-                # st.pyplot(fig)
-
                 reviews_Count = final_jobrecomm.reviewsCount.value_counts()
                 reviewsCount = pd.DataFrame(reviews_Count)
                 reviewsCount.reset_index(inplace=True)
                 reviewsCount.rename({'index': 'reviewsCount', 'reviewsCount': 'Count'}, axis=1, inplace=True)
                 fig = px.pie(reviewsCount, values = "Count", names = "reviewsCount", width=600)
                 fig.update_layout(showlegend=True)
-                # st.write(fig)
                 st.plotly_chart(fig, use_container_width=True)
                             
         # expander for jobs df ---------------------------display#
@@ -365,31 +367,17 @@ def app():
             return f'<a target="_blank" href="{link}">{text}</a>'
 
         with db_expander:
-        #    final1=st.dataframe(final[['title','career level','company','location','industry']].head(no_of_jobs))
-
-    #        def Job_recomm(x):
-    #            final_ = final[['title','career level','company','location','industry']]
-    #            cl_select = final_[final_["career level"]==x]
-    #            return cl_select
-    #
-    #        result_jd = Job_recomm(CL)
-            #st.table(final_jobrecomm.drop(['JobID', "KNN", "TF-IDF", "CV", "webpage","Final"], axis=1))
+       
             final_jobrecomm['externalApplyLink'] = final_jobrecomm['externalApplyLink'].apply(make_clickable)
             final_jobrecomm['url'] = final_jobrecomm['url'].apply(make_clickable)
             # final_jobrecomm['salary'].replace({"0":"Not Available"}, inplace=True)
             final_df=final_jobrecomm[['company','positionName_x','description','location','salary', 'rating', 'reviewsCount', "externalApplyLink", 'url']]
             final_df.rename({'company': 'Company', 'positionName_x': 'Position Name', 'description' : 'Job Description', 'location' : 'Location', 'salary' : 'Salary', 'rating' : 'Company Rating', 'reviewsCount' : 'Company ReviewCount', 'externalApplyLink': 'Web Apply Link', 'url': 'Indeed Apply Link' }, axis=1, inplace=True)
-            # [i for i in salary_range if i != 0]
-            # link is the column with hyperlinks
-            
             show_df = final_df.to_html(escape=False)
-            st.write(show_df, unsafe_allow_html=True)
-            
-            
-            
+            st.write(show_df, unsafe_allow_html=True)               
         st.balloons()
+        #st.snow()
          
 
 if __name__ == '__main__':
         app()
-##kfnsajnfssddsdsd
