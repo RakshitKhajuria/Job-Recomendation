@@ -136,7 +136,8 @@ def app():
 
 
 
-
+        from sklearn.feature_extraction.text import CountVectorizer
+        from sklearn.metrics.pairwise import cosine_similarity
         @st.cache_data
         def TFIDF(scraped_data, cv):
             tfidf_vectorizer = TfidfVectorizer(stop_words='english')
@@ -275,7 +276,8 @@ def app():
         with db_expander:
             available_locations = df3.location.value_counts().sum()
             all_locations = df3.location.value_counts().sum() + df3.location.isnull().sum()
-            st.write("**JOB LOCATIONS FROM**", available_locations, "**OF**", all_locations, "**JOBS**")
+       
+            st.write(" **JOB LOCATIONS FROM**", available_locations, "**OF**", all_locations, "**JOBS**")
 
             folium_static(folium_map, width=2000)
 
@@ -284,13 +286,14 @@ def app():
             with chart1:
                 rating_count = final_jobrecomm.rating.count()
                 count_with_null = final_jobrecomm.rating.count() + final_jobrecomm.rating.isnull().sum()
-                st.write("**RATINGS COUNT : **", rating_count, "**OF**", count_with_null, "**JOBS**")
+                st.write(" **RATINGS COUNT**", rating_count, " **OF**", count_with_null, " **JOBS**")
+
 
                 rating_count = final_jobrecomm.rating.value_counts()
                 rating = pd.DataFrame(rating_count)
                 rating.reset_index(inplace=True)
                 rating.rename({'index': 'rating', 'rating': 'Count'}, axis=1, inplace=True)
-                fig = px.pie(rating, values = "Count", names = "rating", width=600)
+                fig = px.pie(rating, values = "Count", names = "rating", width=600,)
                 fig.update_layout(showlegend=True)
                 # st.write(fig)
                 st.plotly_chart(fig, use_container_width=True)
@@ -335,7 +338,7 @@ def app():
                 sal_count = salary_df['Salary Range'].count() 
 
                 
-                st.write(" **SALARY RANGE FROM**", sal_count, "**SALARY VALUES PROVIDED**")
+                st.write(" **SALARY RANGE FROM** ", sal_count, "**SALARY VALUES PROVIDED**")
                 
         
                 fig2 = px.box(salary_df, y= "Salary Range", width=500,title="Salary Range For The Given Job Profile")
@@ -346,7 +349,7 @@ def app():
             with chart3:
                 reviews_Count = final_jobrecomm.reviewsCount.count()
                 count_with_null = final_jobrecomm.reviewsCount.count() + final_jobrecomm.reviewsCount.isnull().sum()
-                st.write("**REVIEWS COUNT : **", reviews_Count, "**OF**", count_with_null, "**JOBS**")
+                st.write(" **REVIEWS COUNT**", reviews_Count, " **OF**", count_with_null, " **JOBS**")
                 reviews_Count = final_jobrecomm.reviewsCount.value_counts()
                 reviewsCount = pd.DataFrame(reviews_Count)
                 reviewsCount.reset_index(inplace=True)
@@ -359,7 +362,7 @@ def app():
         db_expander = st.expander(label='Job Recommendations:')
 
         final_jobrecomm = final_jobrecomm.replace(np.nan, "Not Provided")
-
+        @st.cache_data
         def make_clickable(link):
             # target _blank to open new window
             # extract clickable text to display for your link
