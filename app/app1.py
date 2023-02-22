@@ -281,22 +281,26 @@ def app():
 
             folium_static(folium_map, width=2000)
 
-            chart1, chart2, chart3 = st.columns(3)
+            chart2, chart3 = st.columns(2,gap="medium")
 
-            with chart1:
-                rating_count = final_jobrecomm.rating.count()
-                count_with_null = final_jobrecomm.rating.count() + final_jobrecomm.rating.isnull().sum()
-                st.write(" **RATINGS COUNT**", rating_count, " **OF**", count_with_null, " **JOBS**")
+            with chart3:
+                rating_count2 = final_jobrecomm.rating.count()
+                count_with_null2 = final_jobrecomm.rating.count() + final_jobrecomm.rating.isnull().sum()
+                st.write(" **RATINGS COUNT**", rating_count2, " **OF**", count_with_null2, " **JOBS**")
 
 
-                rating_count = final_jobrecomm.rating.value_counts()
-                rating = pd.DataFrame(rating_count)
-                rating.reset_index(inplace=True)
-                rating.rename({'index': 'rating', 'rating': 'Count'}, axis=1, inplace=True)
-                fig = px.pie(rating, values = "Count", names = "rating", width=600,)
+                # rating_count = final_jobrecomm.rating.value_counts()
+                # rating = pd.DataFrame(rating_count)
+                # rating.reset_index(inplace=True)
+                # rating.rename({'index': 'rating', 'rating': 'Count'}, axis=1, inplace=True)
+                # fig = px.pie(rating, values = "Count", names = "rating", width=600,)
+                # fig.update_layout(showlegend=True)
+                # # st.write(fig)
+                # st.plotly_chart(fig, use_container_width=True)
+                rating_count = final_jobrecomm[["rating","company"]]
+                fig = px.pie(rating_count, values = "rating", names = "company", width=600)
                 fig.update_layout(showlegend=True)
-                # st.write(fig)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True,)
 
          #   salary_converter (get salary from str)
             @st.cache_data
@@ -324,6 +328,40 @@ def app():
                     return y,m
 
             with chart2:
+                reviews_Count1 = final_jobrecomm.reviewsCount.count()
+                count_with_null1 = final_jobrecomm.reviewsCount.count() + final_jobrecomm.reviewsCount.isnull().sum()
+                st.write(" **REVIEWS COUNT**", reviews_Count1, " **OF**", count_with_null1, " **JOBS**")
+                # reviews_Count = final_jobrecomm.reviewsCount.value_counts()
+                # reviewsCount = pd.DataFrame(reviews_Count)
+                # reviewsCount.reset_index(inplace=True)
+                # reviewsCount.rename({'index': 'reviewsCount', 'reviewsCount': 'Count'}, axis=1, inplace=True)
+                # fig = px.pie(reviewsCount, values = "Count", names = "reviewsCount", width=600)
+                # fig.update_layout(showlegend=True)
+                # st.plotly_chart(fig, use_container_width=True)
+
+                review_count = final_jobrecomm[["reviewsCount","company"]]
+                fig = px.pie(review_count, values = "reviewsCount", names = "company", width=600)
+                fig.update_layout(showlegend=True)
+                st.plotly_chart(fig, use_container_width=True,)
+
+            chart1,chart4,=st.columns(2)
+            with chart1:
+                location_Count1 = final_jobrecomm.location.count()
+                count_with_null3 = final_jobrecomm.location.count() + final_jobrecomm.location.isnull().sum()
+                st.write(" **LOCATION COUNT**", location_Count1, " **OF**", count_with_null3, " **JOBS**")
+                # reviews_Count = final_jobrecomm.reviewsCount.value_counts()
+                # reviewsCount = pd.DataFrame(reviews_Count)
+                # reviewsCount.reset_index(inplace=True)
+                # reviewsCount.rename({'index': 'reviewsCount', 'reviewsCount': 'Count'}, axis=1, inplace=True)
+                # fig = px.pie(reviewsCount, values = "Count", names = "reviewsCount", width=600)
+                # fig.update_layout(showlegend=True)
+                # st.plotly_chart(fig, use_container_width=True)
+
+                location_count = final_jobrecomm[["location","company"]]
+                fig = px.pie(location_count, values = "location", names = "company", width=600)
+                fig.update_layout(showlegend=True)
+                st.plotly_chart(fig, use_container_width=True,)
+            with chart4:
 
 
                 final_salary = final_jobrecomm.copy()
@@ -339,24 +377,10 @@ def app():
 
                 
                 st.write(" **SALARY RANGE FROM** ", sal_count, "**SALARY VALUES PROVIDED**")
-                
-        
                 fig2 = px.box(salary_df, y= "Salary Range", width=500,title="Salary Range For The Given Job Profile")
                 fig2.update_yaxes(showticklabels=True,title="Salary Range in Rupees" )
                 fig2.update_xaxes(visible=True, showticklabels=True)
                 st.write(fig2)
-
-            with chart3:
-                reviews_Count = final_jobrecomm.reviewsCount.count()
-                count_with_null = final_jobrecomm.reviewsCount.count() + final_jobrecomm.reviewsCount.isnull().sum()
-                st.write(" **REVIEWS COUNT**", reviews_Count, " **OF**", count_with_null, " **JOBS**")
-                reviews_Count = final_jobrecomm.reviewsCount.value_counts()
-                reviewsCount = pd.DataFrame(reviews_Count)
-                reviewsCount.reset_index(inplace=True)
-                reviewsCount.rename({'index': 'reviewsCount', 'reviewsCount': 'Count'}, axis=1, inplace=True)
-                fig = px.pie(reviewsCount, values = "Count", names = "reviewsCount", width=600)
-                fig.update_layout(showlegend=True)
-                st.plotly_chart(fig, use_container_width=True)
                             
         # expander for jobs df ---------------------------display#
         db_expander = st.expander(label='Job Recommendations:')
