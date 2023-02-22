@@ -47,7 +47,7 @@ With web scraping restricted on job search engines like Indeed, we turned to Api
 
 # Optical Character Recognition
 
-![Feature-OCR](https://user-images.githubusercontent.com/71117423/220715662-3ad9feac-44c2-4c1a-b140-9f580c60d31c.png)
+![Feature-OCR (1)](https://user-images.githubusercontent.com/71117423/220715830-f4b4a5b8-8b6c-4cfd-b4b2-342761a1cf4c.png)
 
 By utilizing Optical Character Recognition (OCR) technology, we were able to convert a PDF document containing textual data into a machine-encoded text format that can be further processed and analyzed in a Jupyter Notebook. OCR is an advanced technology that enables the automatic conversion of scanned documents and images into machine-encoded text that can be easily manipulated and analyzed. By leveraging OCR technology, we were able to extract valuable insights from the textual data, enabling us to gain a deeper understanding of the information contained within the document.
 
