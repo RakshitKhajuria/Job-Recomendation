@@ -52,13 +52,12 @@ With web scraping restricted on job search engines like Indeed, we turned to Api
 
 By utilizing Optical Character Recognition (OCR) technology, we were able to convert a PDF document containing textual data into a machine-encoded text format that can be further processed and analyzed in a Jupyter Notebook. OCR is an advanced technology that enables the automatic conversion of scanned documents and images into machine-encoded text that can be easily manipulated and analyzed. By leveraging OCR technology, we were able to extract valuable insights from the textual data, enabling us to gain a deeper understanding of the information contained within the document.
 
-# Natural Language Processing
 <h1 align="center">Natural Language Processing</h1>
-# Recommendations
+------------------------
 <h1 align="center">Recommendations</h1>
-# Result
+-----------------------------
 <h1 align="center">Result</h1>
-# Conclusion
+-------------------------------
 <h1 align="center">Conclusion</h1>
 In summary, TalentHive utilizes advanced technologies such as OCR and NLP to provide job seekers and recruiters with personalized job and candidate recommendations. Additionally, the use of Apify allows for efficient and accurate data collection, leading to up-to-date and relevant job postings. TalentHive streamlines the recruitment process, saving time and resources for both job seekers and recruiters.
 
