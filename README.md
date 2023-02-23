@@ -61,6 +61,10 @@ To assist job seekers, the process begins with uploading their CV to TalentHive.
 For recruiters, the process begins with inputting the job post into TalentHive. The job post undergoes NLP analysis alongside the CVs in the database. Using various comparison methods, TalentHive identifies the best-matching candidates for the job posting. The system then provides a list of recommended candidates to the recruiter based on their qualifications and experience.
 
 <h1 align="center">Data Collection</h1>
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/71117423/220831448-55e49fc3-aa69-44a5-a4d2-28996f52da93.png">
+</p>
+
 With web scraping restricted on job search engines like Indeed, we turned to Apify to collect relevant job-related data. Utilizing Apify's advanced tools and automation capabilities, we were able to efficiently and accurately extract large volumes of data. This enabled us to provide up-to-date and precise job postings and candidate recommendations to job seekers and recruiters.
 
 <h1 align="center">Optical Character Recognition</h1>
