@@ -62,7 +62,7 @@ For recruiters, the process begins with inputting the job post into TalentHive. 
 
 <h1 align="center">Data Collection</h1>
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/71117423/220831448-55e49fc3-aa69-44a5-a4d2-28996f52da93.png">
+  <img src= "https://user-images.githubusercontent.com/71117423/220831728-5f2f66a4-d6ac-4f93-9242-d38797a7f9b3.png">
 </p>
 
 With web scraping restricted on job search engines like Indeed, we turned to Apify to collect relevant job-related data. Utilizing Apify's advanced tools and automation capabilities, we were able to efficiently and accurately extract large volumes of data. This enabled us to provide up-to-date and precise job postings and candidate recommendations to job seekers and recruiters.
