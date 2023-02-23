@@ -86,8 +86,9 @@ In NLP, text preprocessing is the first step in the process of building a model.
 
 The some text preprocessing steps are:
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/71117423/220832886-4ccb52f9-a964-46e3-a626-1df7bfa843ce.png" />
+  <img src="https://user-images.githubusercontent.com/71117423/220833096-10719ee1-0e85-476d-9836-62456a61a22e.png" />
 </p>
+
 - Word tokenization:
 - Stop words removal
 - Lemmatization
