@@ -83,7 +83,7 @@ Data preprocessing is an essential step in building a Machine Learning model and
 
 In NLP, text preprocessing is the first step in the process of building a model.
 
-The some text preprocessing steps are:
+Some text preprocessing steps used are:
 <p align="center">
   <img src="https://user-images.githubusercontent.com/71117423/220833096-10719ee1-0e85-476d-9836-62456a61a22e.png" />
 </p>
