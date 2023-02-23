@@ -80,7 +80,22 @@ With web scraping restricted on job search engines like Indeed, we turned to Api
 By utilizing Optical Character Recognition (OCR) technology, we were able to convert a PDF document containing textual data into a machine-encoded text format that can be further processed and analyzed in a Jupyter Notebook. OCR is an advanced technology that enables the automatic conversion of scanned documents and images into machine-encoded text that can be easily manipulated and analyzed. By leveraging OCR technology, we were able to extract valuable insights from the textual data, enabling us to gain a deeper understanding of the information contained within the document.
 
 <h1 align="center">Natural Language Processing</h1>
-------------------------
+Data preprocessing is an essential step in building a Machine Learning model and depending on how well the data has been preprocessed; the results are seen.
+
+In NLP, text preprocessing is the first step in the process of building a model.
+
+The some text preprocessing steps are:
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/71117423/220832886-4ccb52f9-a964-46e3-a626-1df7bfa843ce.png" />
+</p>
+- Word tokenization:
+- Stop words removal
+- Lemmatization
+- Bigram Collection Finder
+<p align="center">
+  <img src="(https://user-images.githubusercontent.com/71117423/220832903-513fc977-d556-4afd-9112-1db19a30ead1.png" />
+</p>
+
 <h1 align="center">Recommendations</h1>
 -----------------------------
 <h1 align="center">Result</h1>
