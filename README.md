@@ -1,4 +1,9 @@
 ![Job-Recomendation](https://socialify.git.ci/Ryzxxl/Job-Recomendation/image?description=1&descriptionEditable=Buzzing%20with%20talent&font=Source%20Code%20Pro&forks=1&issues=1&language=1&name=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark)
+
+<p align="center">
+  <img width="1000" src="https://user-images.githubusercontent.com/71117423/220821051-3e08e957-6258-4474-b87d-f6e71fc34a4a.png" />
+</p>
+
 <h1 align="center">TalentHive</h1>
 
 ## Table of contents
