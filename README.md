@@ -44,7 +44,7 @@ Overall, this app is an excellent tool for both job seekers and recruiters, maki
 
 <h1 align="center">Solution</h1>
 
-## To assist job seekers
+## JOB SEEKERS
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/71117423/220825934-01f5a912-6325-4d3a-9592-f9b71ccc77d7.png" />
@@ -52,11 +52,11 @@ Overall, this app is an excellent tool for both job seekers and recruiters, maki
 
 To assist job seekers, the process begins with uploading their CV to TalentHive. The CV is then processed by Optical Character Recognition (OCR) technology and undergoes Natural Language Processing (NLP). The NLP process compares the uploaded CV with various job postings to determine the best match based on similarity. Finally, the system provides a list of recommended jobs that match the user's qualifications and experience.
 
+# RECRUITERS
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/71117423/220825926-5525e522-7a4f-4e4f-823b-46a4bf82c94f.png" />
 </p>
-
-## For recruiters
 
 For recruiters, the process begins with inputting the job post into TalentHive. The job post undergoes NLP analysis alongside the CVs in the database. Using various comparison methods, TalentHive identifies the best-matching candidates for the job posting. The system then provides a list of recommended candidates to the recruiter based on their qualifications and experience.
 
