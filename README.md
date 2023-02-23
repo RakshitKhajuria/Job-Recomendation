@@ -1,7 +1,6 @@
 ![Job-Recomendation](https://socialify.git.ci/Ryzxxl/Job-Recomendation/image?description=1&descriptionEditable=Buzzing%20with%20talent&font=Source%20Code%20Pro&forks=1&issues=1&language=1&name=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark)
 
-<p style="text-align: center;">Talent Hive</p>
-
+***<p style="text-align: center;">Text with basic formatting applied</p>***
 ## Table of contents
 * [Probmen Statement](#Problem-Statement)
 * [Aim](#aim)
