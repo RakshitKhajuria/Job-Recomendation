@@ -31,6 +31,7 @@ Recruiters can use this app to post job openings, search for candidates based on
 Overall, this app is an excellent tool for both job seekers and recruiters, making the job search and hiring process more efficient and effective.
 
 <h1 align="center">Business Values</h1>
+
 - TalentHive brings the job world to you
 - Simple to use : Drag and Drop
 - Saves time
