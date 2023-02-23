@@ -67,7 +67,6 @@ For recruiters, the process begins with inputting the job post into TalentHive. 
 
 With web scraping restricted on job search engines like Indeed, we turned to Apify to collect relevant job-related data. Utilizing Apify's advanced tools and automation capabilities, we were able to efficiently and accurately extract large volumes of data. This enabled us to provide up-to-date and precise job postings and candidate recommendations to job seekers and recruiters.
 
-
 <h1 align="center">Optical Character Recognition</h1>
 <p align="center">
   <img width="1000" src="https://user-images.githubusercontent.com/71117423/220715830-f4b4a5b8-8b6c-4cfd-b4b2-342761a1cf4c.png" />
@@ -94,7 +93,7 @@ The some text preprocessing steps are:
 - Lemmatization
 - Bigram Collection Finder
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/71117423/220833252-8e844523-e321-402e-885e-417a025b7f87.png" />
+  <img widhth = "1000"src="https://user-images.githubusercontent.com/71117423/220833252-8e844523-e321-402e-885e-417a025b7f87.png" />
 </p>
 
 <h1 align="center">Recommendations</h1>
