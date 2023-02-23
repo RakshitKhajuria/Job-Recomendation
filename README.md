@@ -1,6 +1,6 @@
 ![Job-Recomendation](https://socialify.git.ci/Ryzxxl/Job-Recomendation/image?description=1&descriptionEditable=Buzzing%20with%20talent&font=Source%20Code%20Pro&forks=1&issues=1&language=1&name=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark)
 
-***<p style="text-align: center;">Text with basic formatting applied</p>***
+
 ## Table of contents
 * [Probmen Statement](#Problem-Statement)
 * [Aim](#aim)
@@ -47,6 +47,10 @@ For recruiters, the process begins with inputting the job post into TalentHive. 
 With web scraping restricted on job search engines like Indeed, we turned to Apify to collect relevant job-related data. Utilizing Apify's advanced tools and automation capabilities, we were able to efficiently and accurately extract large volumes of data. This enabled us to provide up-to-date and precise job postings and candidate recommendations to job seekers and recruiters.
 
 # Optical Character Recognition
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/71117423/220715830-f4b4a5b8-8b6c-4cfd-b4b2-342761a1cf4c.png" />
+</p>
 
 ![Feature-OCR (1)](https://user-images.githubusercontent.com/71117423/220715830-f4b4a5b8-8b6c-4cfd-b4b2-342761a1cf4c.png)
 
