@@ -94,7 +94,7 @@ The some text preprocessing steps are:
 - Lemmatization
 - Bigram Collection Finder
 <p align="center">
-  <img src="(https://user-images.githubusercontent.com/71117423/220832903-513fc977-d556-4afd-9112-1db19a30ead1.png" />
+  <img src="https://user-images.githubusercontent.com/71117423/220833252-8e844523-e321-402e-885e-417a025b7f87.png" />
 </p>
 
 <h1 align="center">Recommendations</h1>
