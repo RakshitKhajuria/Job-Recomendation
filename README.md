@@ -44,7 +44,7 @@ Overall, this app is an excellent tool for both job seekers and recruiters, maki
 
 <h1 align="center">Solution</h1>
 
-## JOB SEEKERS
+# JOB SEEKERS
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/71117423/220825934-01f5a912-6325-4d3a-9592-f9b71ccc77d7.png" />
