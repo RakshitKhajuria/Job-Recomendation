@@ -36,11 +36,37 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import NearestNeighbors
+st.set_page_config(layout="wide", page_icon='logo/logo2.png', page_title="CANDIDATE")
+
+
+def add_logo():
+    st.markdown(
+        """
+        <style>
+            [data-testid="stSidebarNav"] {
+                background-image: url(https://www.linkpicture.com/q/logo_19.png);
+                background-repeat: no-repeat;
+                padding-top: 120px;
+                background-position: 20px 20px;
+            }
+            [data-testid="stSidebarNav"]::before {
+                content: "TALENT HIVE";
+                margin-left: 20px;
+                margin-top: 20px;
+                font-size: 30px;
+                position: relative;
+                top: 100px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+add_logo()
 
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 # set wide layout
-st.set_page_config(layout="wide")
 
 def app():
     # (OCR function)
@@ -184,8 +210,8 @@ def app():
         @st.cache_data   
         def KNN(scraped_data, cv):
             tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-            n_neighbors = 1000
-            KNN = NearestNeighbors(n_neighbors, p=2)
+            # n_neighbors = 100
+            KNN = NearestNeighbors(n_neighbors = 100, p=2)
             KNN.fit(tfidf_vectorizer.fit_transform(scraped_data))
             NNs = KNN.kneighbors(tfidf_vectorizer.transform(cv), return_distance=True)
             top = NNs[1][0][1:]
@@ -279,14 +305,14 @@ def app():
        
             st.write(" **JOB LOCATIONS FROM**", available_locations, "**OF**", all_locations, "**JOBS**")
 
-            folium_static(folium_map, width=2000)
+            folium_static(folium_map, width=1570)
 
             chart2, chart3,chart1 = st.columns(3)
 
             with chart3:
                 #rating_count2 = final_jobrecomm.rating.count()
                 #count_with_null2 = final_jobrecomm.rating.count() + final_jobrecomm.rating.isnull().sum()
-                st.write(" **RATINGS W.R.T Company **",)
+                st.write("<p style='font-size:17px;font-family: Verdana, sans-serif'> RATINGS W.R.T Company</p>", unsafe_allow_html=True)
 
 
                 # rating_count = final_jobrecomm.rating.value_counts()
@@ -330,7 +356,7 @@ def app():
             with chart2:
                 #reviews_Count1 = final_jobrecomm.reviewsCount.count()
                 #count_with_null1 = final_jobrecomm.reviewsCount.count() + final_jobrecomm.reviewsCount.isnull().sum()
-                st.write(" **REVIEWS COUNT W.R.T Company**",)
+                st.write("<p style='font-size:17px;font-family: Verdana, sans-serif'> REVIEWS COUNT W.R.T Company</p>", unsafe_allow_html=True)
                 # reviews_Count = final_jobrecomm.reviewsCount.value_counts()
                 # reviewsCount = pd.DataFrame(reviews_Count)
                 # reviewsCount.reset_index(inplace=True)
@@ -394,7 +420,11 @@ def app():
         st.download_button("Press to Download",csv,"file.csv","text/csv",key='download-csv')           
         st.balloons()
         #st.snow()
-         
+  # Set sidebar config
+st.sidebar.title("About us")
+st.sidebar.subheader("By")
+st.sidebar.markdown("**Rakshit Khajuria - 19bec109**")
+st.sidebar.markdown("**Prikshit Sharma - 19bec062**")       
 
 if __name__ == '__main__':
         app()
