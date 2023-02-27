@@ -37,9 +37,17 @@ add_logo()
 # Set sidebar config
 st.sidebar.title("About us")
 st.sidebar.subheader("By")
-st.sidebar.markdown("**Rakshit Khajuria - 19bec109**")
-st.sidebar.markdown("**Prikshit Sharma - 19bec062**")
+#st.sidebar.markdown("**Rakshit Khajuria - 19bec109**")
+#st.sidebar.markdown("**Prikshit Sharma - 19bec062**")
+text_string_variable1="Rakshit Khajuria - 19bec109"
+url_string_variable1="https://www.linkedin.com/in/rakshit-khajuria/"
+link = f'[{text_string_variable1}]({url_string_variable1})'
+st.sidebar.markdown(link, unsafe_allow_html=True)
 
+text_string_variable2="Prikshit Sharma - 19bec062"
+url_string_variable2="https://www.linkedin.com/in/prikshit7766/"
+link = f'[{text_string_variable2}]({url_string_variable2})'
+st.sidebar.markdown(link, unsafe_allow_html=True)
 # Set main page config
 st.markdown("<h1 style='text-align: center; font-family: Verdana, sans-serif; padding: 20px; border: 2px solid #758283; border-radius: 5px;'>Welcome to Talent Hive !</h1>", unsafe_allow_html=True)
 
@@ -65,5 +73,10 @@ st.write("<p style='font-size:20px;'>This app is designed to assist applicants i
 
 st.balloons()
 
+# Create a container for the footer
+footer_container = st.container()
 
+# Add content to the footer container
+with footer_container:
 
+    st.write("Github @ <a href='https://github.com/Ryzxxl/Job-Recomendation'>Repository</a>", unsafe_allow_html=True)

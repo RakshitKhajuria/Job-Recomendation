@@ -341,8 +341,15 @@ def run():
 # Set sidebar config
 st.sidebar.title("About us")
 st.sidebar.subheader("By")
-st.sidebar.markdown("**Rakshit Khajuria - 19bec109**")
-st.sidebar.markdown("**Prikshit Sharma - 19bec062**")
+text_string_variable1="Rakshit Khajuria - 19bec109"
+url_string_variable1="https://www.linkedin.com/in/rakshit-khajuria/"
+link = f'[{text_string_variable1}]({url_string_variable1})'
+st.sidebar.markdown(link, unsafe_allow_html=True)
+
+text_string_variable2="Prikshit Sharma - 19bec062"
+url_string_variable2="https://www.linkedin.com/in/prikshit7766/"
+link = f'[{text_string_variable2}]({url_string_variable2})'
+st.sidebar.markdown(link, unsafe_allow_html=True)
 
 
 run()
