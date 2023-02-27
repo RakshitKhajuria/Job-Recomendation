@@ -128,4 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-.Job-Recomendation\cv_to_df
+.cv_to_df/
