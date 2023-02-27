@@ -148,7 +148,7 @@ def run():
         if pdf_file is not None:
             # with st.spinner('Uploading your Resume....'):
             #     time.sleep(4)
-            save_image_path = './cv_to_df/'+pdf_file.name
+            save_image_path = pdf_file.name
             with open(save_image_path, "wb") as f:
                 f.write(pdf_file.getbuffer())
             show_pdf(save_image_path)

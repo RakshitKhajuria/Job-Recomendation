@@ -305,7 +305,7 @@ def app():
        
             st.write(" **JOB LOCATIONS FROM**", available_locations, "**OF**", all_locations, "**JOBS**")
 
-            folium_static(folium_map, width=1570)
+            folium_static(folium_map, width=1380)
 
             chart2, chart3,chart1 = st.columns(3)
 
