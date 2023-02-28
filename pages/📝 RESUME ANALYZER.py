@@ -11,7 +11,11 @@ from pdfminer3.converter import TextConverter
 import io,random
 from streamlit_tags import st_tags
 from PIL import Image
-
+import pymongo
+client = pymongo.MongoClient("")
+db = client.test
+database = client["Job-Recomendation"]
+collection = database["Resume_from_RESUME_ANALYZER"]
 st.set_page_config(layout="wide", page_icon='logo/logo2.png', page_title="RESUME ANALYZER")
 
 import plotly.express as px
@@ -103,24 +107,29 @@ hr_courses = [
 ]
 
 
+def resume_store(data):
+            collection.insert_one(data)
+    
 def show_pdf(file_path):
-    with open(file_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-    # pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
-    pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    
+    encoded_pdf = base64.b64encode(file_path.read()).decode('utf-8')
+    
+    embed_code = f'<embed src="data:application/pdf;base64,{encoded_pdf}" width="700" height="1000" type="application/pdf">'
+    st.markdown(embed_code, unsafe_allow_html=True)
+    return encoded_pdf
+
 def pdf_reader(file):
     resource_manager = PDFResourceManager()
     fake_file_handle = io.StringIO()
     converter = TextConverter(resource_manager, fake_file_handle, laparams=LAParams())
     page_interpreter = PDFPageInterpreter(resource_manager, converter)
-    with open(file, 'rb') as fh:
-        for page in PDFPage.get_pages(fh,
+    
+    for page in PDFPage.get_pages(file,
                                       caching=True,
                                       check_extractable=True):
             page_interpreter.process_page(page)
             print(page)
-        text = fake_file_handle.getvalue()
+    text = fake_file_handle.getvalue()
 
     # close open handles
     converter.close()
@@ -146,16 +155,17 @@ def run():
         #             unsafe_allow_html=True)
         pdf_file = st.file_uploader("Choose your Resume", type=["pdf"])
         if pdf_file is not None:
-            # with st.spinner('Uploading your Resume....'):
-            #     time.sleep(4)
-            save_image_path = pdf_file.name
-            with open(save_image_path, "wb") as f:
-                f.write(pdf_file.getbuffer())
-            show_pdf(save_image_path)
-            resume_data = ResumeParser(save_image_path).get_extracted_data()
+            count_=0
+
+            encoded_pdf=show_pdf(pdf_file)
+            resume_data = ResumeParser(pdf_file).get_extracted_data()
+
+            resume_data["pdf_to_base64"]=encoded_pdf
+            
+            #resume_store(resume_data)
             if resume_data:
                 ## Get the whole resume data
-                resume_text = pdf_reader(save_image_path)
+                resume_text = pdf_reader(pdf_file)
 
                 st.header("*Resume Analysis*")
                 st.success("Hello "+ resume_data['name'])
@@ -277,6 +287,12 @@ def run():
                 cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
                 cur_time = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
                 timestamp = str(cur_date+'_'+cur_time)
+                st.write(timestamp)
+                st.dataframe(resume_data)
+                save={timestamp:resume_data}
+                if count_==0:
+                    count_=1
+                    resume_store(save)
 
                 ### Resume writing recommendation
                 st.subheader("**Resume Tips & Ideas💡**")
@@ -353,3 +369,15 @@ st.sidebar.markdown(link, unsafe_allow_html=True)
 
 
 run()
+
+# # Take input as a PDF file
+# pdf_file = st.file_uploader("Upload a PDF file", type=["pdf"])
+
+# if pdf_file is not None:
+#     # Convert PDF to base64
+#     encoded_pdf = base64.b64encode(pdf_file.read()).decode('utf-8')
+#     st.write(encoded_pdf)
+
+#     # Embed base64 PDF and display it in Streamlit
+#     embed_code = f'<embed src="data:application/pdf;base64,{encoded_pdf}" width="700" height="1000" type="application/pdf">'
+#     st.markdown(embed_code, unsafe_allow_html=True)
