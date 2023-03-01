@@ -1,7 +1,10 @@
 # Core Pkgs
 import streamlit as st 
+from JobRecommendation.side_logo import add_logo
+from JobRecommendation.sidebar import sidebar
 import altair as alt
 import plotly.express as px 
+
 
 # EDA Pkgs
 import pandas as pd 
@@ -9,46 +12,11 @@ import numpy as np
 from datetime import datetime
 st.set_page_config(layout="centered", page_icon='logo/logo2.png', page_title="HOMEPAGE")
 
-def add_logo():
-    st.markdown(
-        """
-        <style>
-            [data-testid="stSidebarNav"] {
-                background-image: url(https://www.linkpicture.com/q/logo_19.png);
-                background-repeat: no-repeat;
-                padding-top: 100px;
-                background-position: 20px 20px;
-            }
-            [data-testid="stSidebarNav"]::before {
-                content: "TALENT HIVE";
-                margin-left: 20px;
-                margin-top: 20px;
-                font-size: 40px;
-                position: relative;
-                top: 100px;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
 
 add_logo()
+sidebar()
 
-# Set sidebar config
-st.sidebar.title("About us")
-st.sidebar.subheader("By")
-#st.sidebar.markdown("**Rakshit Khajuria - 19bec109**")
-#st.sidebar.markdown("**Prikshit Sharma - 19bec062**")
-text_string_variable1="Rakshit Khajuria - 19bec109"
-url_string_variable1="https://www.linkedin.com/in/rakshit-khajuria/"
-link = f'[{text_string_variable1}]({url_string_variable1})'
-st.sidebar.markdown(link, unsafe_allow_html=True)
 
-text_string_variable2="Prikshit Sharma - 19bec062"
-url_string_variable2="https://www.linkedin.com/in/prikshit7766/"
-link = f'[{text_string_variable2}]({url_string_variable2})'
-st.sidebar.markdown(link, unsafe_allow_html=True)
-# Set main page config
 st.markdown("<h1 style='text-align: center; font-family: Verdana, sans-serif; padding: 20px; border: 2px solid #758283; border-radius: 5px;'>Welcome to Talent Hive !</h1>", unsafe_allow_html=True)
 
 st.markdown("<div style='background-color: rgba(255, 0, 0, 0); padding: 10px;'>", unsafe_allow_html=True)
@@ -80,3 +48,5 @@ footer_container = st.container()
 with footer_container:
 
     st.write("Github @ <a href='https://github.com/Ryzxxl/Job-Recomendation'>Repository</a>", unsafe_allow_html=True)
+
+#from JobRecommendation.config import client

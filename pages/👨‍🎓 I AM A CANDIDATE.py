@@ -1,5 +1,6 @@
 import pdfplumber
 import streamlit as st
+#from jobRecommendation import sidebar
 import pandas as pd
 import numpy as np
 import nltk
@@ -33,73 +34,30 @@ import folium
 from geopy.extra.rate_limiter import RateLimiter
 import numpy as np
 from streamlit_folium import folium_static
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.neighbors import NearestNeighbors
 from pyresparser import ResumeParser
-from pdfminer3.layout import LAParams, LTTextBox
-from pdfminer3.pdfpage import PDFPage
-from pdfminer3.pdfinterp import PDFResourceManager
-from pdfminer3.pdfinterp import PDFPageInterpreter
-from pdfminer3.converter import TextConverter
+import os,sys
 import pymongo
+from JobRecommendation.side_logo import add_logo
+from JobRecommendation.sidebar import sidebar
+from JobRecommendation import utils , MongoDB_function
+from JobRecommendation import text_preprocessing ,distance_calculation
 
-client = pymongo.MongoClient("")
-db = client.test
-database = client["Job-Recomendation"]
-collection = database["Resume_from_CANDIDATE"]
+
+
+dataBase="Job-Recomendation"
+collection1="preprocessed_jobs_Data"
+collection2 = "Resume_from_CANDIDATE"
+collection3 = "all_locations_Data"
 
 st.set_page_config(layout="wide", page_icon='logo/logo2.png', page_title="CANDIDATE")
 
 
-def add_logo():
-    st.markdown(
-        """
-        <style>
-            [data-testid="stSidebarNav"] {
-                background-image: url(https://www.linkpicture.com/q/logo_19.png);
-                background-repeat: no-repeat;
-                padding-top: 120px;
-                background-position: 20px 20px;
-            }
-            [data-testid="stSidebarNav"]::before {
-                content: "TALENT HIVE";
-                margin-left: 20px;
-                margin-top: 20px;
-                font-size: 30px;
-                position: relative;
-                top: 100px;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
 add_logo()
-
-# Set sidebar config
-st.sidebar.title("About us")
-st.sidebar.subheader("By")
-text_string_variable1="Rakshit Khajuria - 19bec109"
-url_string_variable1="https://www.linkedin.com/in/rakshit-khajuria/"
-link = f'[{text_string_variable1}]({url_string_variable1})'
-st.sidebar.markdown(link, unsafe_allow_html=True)
-
-text_string_variable2="Prikshit Sharma - 19bec062"
-url_string_variable2="https://www.linkedin.com/in/prikshit7766/"
-link = f'[{text_string_variable2}]({url_string_variable2})'
-st.sidebar.markdown(link, unsafe_allow_html=True) 
+sidebar()
 
 
-def pdf_to_base64(file_path):
-    
-    encoded_pdf = base64.b64encode(file_path.read()).decode('utf-8')
 
-    return encoded_pdf
 
-def resume_store(data):
-            collection.insert_one(data)
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 # set wide layout
@@ -121,7 +79,7 @@ def app():
     # upload cv + turn pdf to text------------------display##
     cv=c1.file_uploader('Upload your CV', type='pdf')
     # career level
-    job_loc=pd.read_csv("all_locations.csv")
+    job_loc = MongoDB_function.get_collection_as_dataframe(dataBase,collection3)
     all_locations=list(job_loc["location"].dropna().unique())
 
     RL = c2.multiselect('Filter', all_locations )
@@ -135,41 +93,23 @@ def app():
         count_=0
         cv_text = extract_data(cv)
             # print(cv_text)
-        encoded_pdf=pdf_to_base64(cv)
+        encoded_pdf=utils.pdf_to_base64(cv)
         resume_data = ResumeParser(cv).get_extracted_data()
         resume_data["pdf_to_base64"]=encoded_pdf
-        #st.dataframe(resume_data)
-                        ## Insert into table
-        ts = time.time()
-        cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
-        cur_time = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
-        timestamp = str(cur_date+'_'+cur_time)
-        #st.write(timestamp)
-        #st.dataframe(resume_data)
+
+        # inserting data into mongodb           
+        timestamp = utils.generateUniqueFileName()
         save={timestamp:resume_data}
         if count_==0:
             count_=1
-            resume_store(save)
+            MongoDB_function.resume_store(save,dataBase,collection2)
 
         #----------------------------workings---------------------#
 
         # (NLP funtion)
-        # import stop word lists for NLP function
 
-        #(NLP keywords function)
-        @st.cache_data
-        def nlp(x):
-            word_sent = word_tokenize(x.lower().replace("\n",""))
-            _stopwords = set(stopwords.words('english') + list(punctuation)+list("●")+list('–')+list('’'))
-            word_sent=[word for word in word_sent if word not in _stopwords]
-            lemmatizer = WordNetLemmatizer()
-            NLP_Processed_CV = [lemmatizer.lemmatize(word) for word in word_tokenize(" ".join(word_sent))]
-        #     return " ".join(NLP_Processed_CV)
-            return NLP_Processed_CV
-        
-        # (NLP keywords for CV workings)
         try:
-            NLP_Processed_CV=nlp(cv_text)
+            NLP_Processed_CV=text_preprocessing.nlp(cv_text)   # caling (NLP funtion) for text processing
         except NameError:
             st.error('Please enter a valid input')
         #NLP_Processed_CV=func(cv_text)
@@ -189,8 +129,8 @@ def app():
         # import whole nlp csv
         @st.cache_data #method to get data once and store in cache.
         def get_jobcsv():
-            url='preprocessed_jobs.csv'
-            return pd.read_csv(url)
+            DF=MongoDB_function.get_collection_as_dataframe(dataBase,collection1)
+            return DF
         df= get_jobcsv()
   
        
@@ -214,43 +154,17 @@ def app():
 
 
 
-        from sklearn.feature_extraction.text import CountVectorizer
-        from sklearn.metrics.pairwise import cosine_similarity
-        @st.cache_data
-        def TFIDF(scraped_data, cv):
-            tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-            # TF-IDF Scraped data
-            tfidf_jobid = tfidf_vectorizer.fit_transform(scraped_data)
-            # TF-IDF CV
-            user_tfidf = tfidf_vectorizer.transform(cv)
-            # Using cosine_similarity on (Scraped data) & (CV)
-            cos_similarity_tfidf = map(lambda x: cosine_similarity(user_tfidf,x),tfidf_jobid)
-            output2 = list(cos_similarity_tfidf)
-            return output2  # what does it return?
-        output2 = TFIDF(df['All'], df2['All'])
+        # TfidfVectorizer  function
+        output2 = distance_calculation.TFIDF(df['All'], df2['All'])
         
         # show top job recommendations using TF-IDF
         top = sorted(range(len(output2)), key=lambda i: output2[i], reverse=True)[:1000]
         list_scores = [output2[i][0][0] for i in top]
         TF=get_recommendation(top,df, list_scores)
 
-        #st.dataframe(TF) #####Show TF
 
         # Count Vectorizer function
-        from sklearn.feature_extraction.text import CountVectorizer
-        from sklearn.metrics.pairwise import cosine_similarity
-
-        @st.cache_data
-        def count_vectorize(scraped_data, cv):
-            # CountV the scraped data
-            count_vectorizer = CountVectorizer()
-            count_jobid = count_vectorizer.fit_transform(scraped_data) #fitting and transforming the vector
-            # CountV the cv
-            user_count = count_vectorizer.transform(cv)
-            cos_similarity_countv = map(lambda x: cosine_similarity(user_count, x),count_jobid)
-            output3 = list(cos_similarity_countv)
-            return output3
-        output3 = count_vectorize(df['All'], df2['All'])
+        output3 = distance_calculation.count_vectorize(df['All'], df2['All'])
     
         # show top job recommendations using Count Vectorizer
         top = sorted(range(len(output3)), key=lambda i: output3[i], reverse=True)[:1000]
@@ -258,20 +172,8 @@ def app():
         cv=get_recommendation(top, df, list_scores)
 
         # KNN function
-    
-        @st.cache_data   
-        def KNN(scraped_data, cv):
-            tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-            # n_neighbors = 100
-            KNN = NearestNeighbors(n_neighbors = 100, p=2)
-            KNN.fit(tfidf_vectorizer.fit_transform(scraped_data))
-            NNs = KNN.kneighbors(tfidf_vectorizer.transform(cv), return_distance=True)
-            top = NNs[1][0][1:]
-            index_score = NNs[0][0][1:]
-            knn = get_recommendation(top, df, index_score)
-            return knn
-        knn = KNN(df['All'], df2['All'])
-
+        top, index_score = distance_calculation.KNN(df['All'], df2['All'],number_of_neighbors=100)
+        knn = get_recommendation(top, df, index_score)
         # Combine 3 methods into a dataframe
         merge1 = knn[['JobID','positionName', 'score']].merge(TF[['JobID','score']], on= "JobID")
         final = merge1.merge(cv[['JobID','score']], on = "JobID")
@@ -362,19 +264,8 @@ def app():
             chart2, chart3,chart1 = st.columns(3)
 
             with chart3:
-                #rating_count2 = final_jobrecomm.rating.count()
-                #count_with_null2 = final_jobrecomm.rating.count() + final_jobrecomm.rating.isnull().sum()
                 st.write("<p style='font-size:17px;font-family: Verdana, sans-serif'> RATINGS W.R.T Company</p>", unsafe_allow_html=True)
 
-
-                # rating_count = final_jobrecomm.rating.value_counts()
-                # rating = pd.DataFrame(rating_count)
-                # rating.reset_index(inplace=True)
-                # rating.rename({'index': 'rating', 'rating': 'Count'}, axis=1, inplace=True)
-                # fig = px.pie(rating, values = "Count", names = "rating", width=600,)
-                # fig.update_layout(showlegend=True)
-                # # st.write(fig)
-                # st.plotly_chart(fig, use_container_width=True)
                 rating_count = final_jobrecomm[["rating","company"]]
                 fig = px.pie(rating_count, values = "rating", names = "company", width=600)
                 fig.update_layout(showlegend=True)
@@ -406,23 +297,11 @@ def app():
                     return y,m
 
             with chart2:
-                #reviews_Count1 = final_jobrecomm.reviewsCount.count()
-                #count_with_null1 = final_jobrecomm.reviewsCount.count() + final_jobrecomm.reviewsCount.isnull().sum()
                 st.write("<p style='font-size:17px;font-family: Verdana, sans-serif'> REVIEWS COUNT W.R.T Company</p>", unsafe_allow_html=True)
-                # reviews_Count = final_jobrecomm.reviewsCount.value_counts()
-                # reviewsCount = pd.DataFrame(reviews_Count)
-                # reviewsCount.reset_index(inplace=True)
-                # reviewsCount.rename({'index': 'reviewsCount', 'reviewsCount': 'Count'}, axis=1, inplace=True)
-                # fig = px.pie(reviewsCount, values = "Count", names = "reviewsCount", width=600)
-                # fig.update_layout(showlegend=True)
-                # st.plotly_chart(fig, use_container_width=True)
-
                 review_count = final_jobrecomm[["reviewsCount","company"]]
                 fig = px.pie(review_count, values = "reviewsCount", names = "company", width=600)
                 fig.update_layout(showlegend=True)
                 st.plotly_chart(fig, use_container_width=True,)
-
-
 
             with chart1:
 
