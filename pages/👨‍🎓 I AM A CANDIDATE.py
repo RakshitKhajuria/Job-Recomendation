@@ -45,7 +45,7 @@ from pdfminer3.pdfinterp import PDFPageInterpreter
 from pdfminer3.converter import TextConverter
 import pymongo
 
-client = pymongo.MongoClient("mongodb+srv://Prikshit7766:prikshit@cluster0.bb7u7jb.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("")
 db = client.test
 database = client["Job-Recomendation"]
 collection = database["Resume_from_CANDIDATE"]
