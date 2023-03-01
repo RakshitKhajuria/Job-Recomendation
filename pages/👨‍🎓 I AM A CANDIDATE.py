@@ -17,9 +17,10 @@ import pandas as pd
 from nltk.collocations import *
 import re
 import plotly.express as px
-import time
+import time,datetime
 import sys
 import streamlit
+import base64,random
 #import geopandas as gpd
 import geopy
 from geopy.geocoders import Nominatim
@@ -36,6 +37,19 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import NearestNeighbors
+from pyresparser import ResumeParser
+from pdfminer3.layout import LAParams, LTTextBox
+from pdfminer3.pdfpage import PDFPage
+from pdfminer3.pdfinterp import PDFResourceManager
+from pdfminer3.pdfinterp import PDFPageInterpreter
+from pdfminer3.converter import TextConverter
+import pymongo
+
+client = pymongo.MongoClient("mongodb+srv://Prikshit7766:prikshit@cluster0.bb7u7jb.mongodb.net/?retryWrites=true&w=majority")
+db = client.test
+database = client["Job-Recomendation"]
+collection = database["Resume_from_CANDIDATE"]
+
 st.set_page_config(layout="wide", page_icon='logo/logo2.png', page_title="CANDIDATE")
 
 
@@ -64,6 +78,28 @@ def add_logo():
 
 add_logo()
 
+# Set sidebar config
+st.sidebar.title("About us")
+st.sidebar.subheader("By")
+text_string_variable1="Rakshit Khajuria - 19bec109"
+url_string_variable1="https://www.linkedin.com/in/rakshit-khajuria/"
+link = f'[{text_string_variable1}]({url_string_variable1})'
+st.sidebar.markdown(link, unsafe_allow_html=True)
+
+text_string_variable2="Prikshit Sharma - 19bec062"
+url_string_variable2="https://www.linkedin.com/in/prikshit7766/"
+link = f'[{text_string_variable2}]({url_string_variable2})'
+st.sidebar.markdown(link, unsafe_allow_html=True) 
+
+
+def pdf_to_base64(file_path):
+    
+    encoded_pdf = base64.b64encode(file_path.read()).decode('utf-8')
+
+    return encoded_pdf
+
+def resume_store(data):
+            collection.insert_one(data)
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 # set wide layout
@@ -96,8 +132,24 @@ def app():
     no_of_jobs = st.slider('Number of Job Recommendations:', min_value=20, max_value=100, step=10)
 
     if cv is not None:
+        count_=0
         cv_text = extract_data(cv)
             # print(cv_text)
+        encoded_pdf=pdf_to_base64(cv)
+        resume_data = ResumeParser(cv).get_extracted_data()
+        resume_data["pdf_to_base64"]=encoded_pdf
+        #st.dataframe(resume_data)
+                        ## Insert into table
+        ts = time.time()
+        cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
+        cur_time = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
+        timestamp = str(cur_date+'_'+cur_time)
+        #st.write(timestamp)
+        #st.dataframe(resume_data)
+        save={timestamp:resume_data}
+        if count_==0:
+            count_=1
+            resume_store(save)
 
         #----------------------------workings---------------------#
 
@@ -420,18 +472,7 @@ def app():
         st.download_button("Press to Download",csv,"file.csv","text/csv",key='download-csv')           
         st.balloons()
         #st.snow()
-# Set sidebar config
-st.sidebar.title("About us")
-st.sidebar.subheader("By")
-text_string_variable1="Rakshit Khajuria - 19bec109"
-url_string_variable1="https://www.linkedin.com/in/rakshit-khajuria/"
-link = f'[{text_string_variable1}]({url_string_variable1})'
-st.sidebar.markdown(link, unsafe_allow_html=True)
 
-text_string_variable2="Prikshit Sharma - 19bec062"
-url_string_variable2="https://www.linkedin.com/in/prikshit7766/"
-link = f'[{text_string_variable2}]({url_string_variable2})'
-st.sidebar.markdown(link, unsafe_allow_html=True) 
 
 if __name__ == '__main__':
         app()

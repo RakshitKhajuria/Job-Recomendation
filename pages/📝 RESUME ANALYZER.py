@@ -287,8 +287,8 @@ def run():
                 cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
                 cur_time = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
                 timestamp = str(cur_date+'_'+cur_time)
-                st.write(timestamp)
-                st.dataframe(resume_data)
+                #st.write(timestamp)
+                #st.dataframe(resume_data)
                 save={timestamp:resume_data}
                 if count_==0:
                     count_=1
