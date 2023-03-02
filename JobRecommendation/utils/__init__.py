@@ -8,6 +8,8 @@ from pdfminer3.pdfinterp import PDFResourceManager
 from pdfminer3.pdfinterp import PDFPageInterpreter
 from pdfminer3.converter import TextConverter
 from  JobRecommendation.exception import jobException
+import pdfplumber
+import re
 import streamlit as st
 
             
@@ -59,5 +61,50 @@ def show_pdf(encoded_pdf:str):
     try:
         embed_code = f'<embed src="data:application/pdf;base64,{encoded_pdf}" width="700" height="1000" type="application/pdf">'
         return embed_code
+    except Exception as e:
+        raise jobException(e, sys)
+
+# (OCR function)
+@st.cache_data
+def extract_data(feed):
+    try:
+        text=''
+        with pdfplumber.open(feed) as pdf:
+            pages = pdf.pages
+            for page in pages:
+                text+=page.extract_text(x_tolerance=2)
+        return text
+    except Exception as e:
+        raise jobException(e, sys)
+
+
+#   salary_converter (get salary from str)
+@st.cache_data
+def salary_converter(list_conv):
+    try:
+        salary_range = []
+        for i in list_conv:
+            x = re.findall('[0-9,]+', str(i))
+            for j in x:
+                salary_range.append(int(j.replace(",",'')))
+                salary_range = [i for i in salary_range if i != 0]
+                salary_range = sorted(salary_range)
+        return salary_range
+    except Exception as e:
+        raise jobException(e, sys)
+
+
+#get_monthly_yearly_salary
+@st.cache_data
+def get_monthly_yearly_salary(col):
+    try:
+        y=[]
+        m=[]
+        for i in col:
+            if i.endswith('year'):
+                y.append(i)
+            else:
+                m.append(i)
+        return y,m
     except Exception as e:
         raise jobException(e, sys)

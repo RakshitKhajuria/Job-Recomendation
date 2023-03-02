@@ -10,7 +10,7 @@ import pymongo
 import plotly.express as px
 from JobRecommendation.side_logo import add_logo
 from JobRecommendation.sidebar import sidebar
-from JobRecommendation.courses import ds_course,web_course,android_course,ios_course,uiux_course
+from JobRecommendation.courses import ds_course,web_course,android_course,ios_course,uiux_course,ds_keyword,web_keyword,android_keyword,ios_keyword,uiux_keyword
 from JobRecommendation import utils ,MongoDB_function
 dataBase = "Job-Recomendation"
 collection = "Resume_from_RESUME_ANALYZER"
@@ -19,6 +19,7 @@ st.set_page_config(layout="wide", page_icon='logo/logo2.png', page_title="RESUME
 
 add_logo()
 sidebar()
+
 
 def course_recommender(course_list):
     st.subheader("*Courses & Certificates🎓 Recommendations*")
@@ -33,6 +34,8 @@ def course_recommender(course_list):
         if c == no_of_reco:
             break
     return rec_course
+
+
 def run():
         st.title("Resume Analyser")
 
@@ -80,14 +83,6 @@ def run():
                 keywords = st_tags(label='### Skills that you have',
                 text='See our skills recommendation',
                     value=resume_data['skills'],key = '1')
-
-                ##  recommendation
-                ds_keyword = ['tensorflow','keras','pytorch','machine learning','deep Learning','flask','streamlit']
-                web_keyword = ['react', 'django', 'node jS', 'react js', 'php', 'laravel', 'magento', 'wordpress',
-                               'javascript', 'angular js', 'c#', 'flask']
-                android_keyword = ['android','android development','flutter','kotlin','xml','kivy']
-                ios_keyword = ['ios','ios development','swift','cocoa','cocoa touch','xcode']
-                uiux_keyword = ['ux','adobe xd','figma','zeplin','balsamiq','ui','prototyping','wireframes','storyframes','adobe photoshop','photoshop','editing','adobe illustrator','illustrator','adobe after effects','after effects','adobe premier pro','premier pro','adobe indesign','indesign','wireframe','solid','grasp','user research','user experience']
 
                 recommended_skills = []
                 reco_field = ''

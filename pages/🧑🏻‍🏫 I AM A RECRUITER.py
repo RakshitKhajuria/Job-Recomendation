@@ -1,23 +1,10 @@
-# import pdfplumber
 import streamlit as st
 import pandas as pd
 import numpy as np
-import nltk
-import os
 import base64
-from nltk.tokenize import word_tokenize, sent_tokenize
-from nltk.corpus import stopwords 
-from string import punctuation
-from nltk.corpus import wordnet as wn
-from nltk.stem import WordNetLemmatizer
-from nltk.probability import FreqDist
-from heapq import nlargest
-from collections import defaultdict
-import pandas as pd 
-from nltk.collocations import *
-from nltk.corpus import words
 import os,sys
 import pymongo
+from  JobRecommendation.exception import jobException
 from JobRecommendation.side_logo import add_logo
 from JobRecommendation.sidebar import sidebar
 from JobRecommendation import utils ,MongoDB_function
@@ -37,14 +24,13 @@ add_logo()
 sidebar()
 
 
-    
+   
 def app():
     st.title('Candidate Recommendation')
     c1, c2 = st.columns((3,2))
     # number of cv recommend slider------------------display##
     no_of_cv = c2.slider('Number of CV Recommendations:', min_value=0, max_value=6, step=1)
     jd = c1.text_area("PASTE YOUR JOB DESCRIPTION HERE")
-
         
     if len(jd) >=1:
 
@@ -53,28 +39,32 @@ def app():
 
         jd_df=pd.DataFrame()
         jd_df['jd']=[' '.join(NLP_Processed_JD)]
+
+        @st.cache_data
         def get_recommendation(top, df_all, scores):
-            recommendation = pd.DataFrame(columns = ['name', 'degree',"email",'Unnamed: 0','mobile_number','skills','no_of_pages','score'])
-            count = 0
-            for i in top:
-        #         recommendation.at[count, 'ApplicantID'] = u
-                
-                recommendation.at[count, 'name'] = df['name'][i]
-                recommendation.at[count, 'degree'] = df['degree'][i]
-                recommendation.at[count, 'email'] = df['email'][i]
-                recommendation.at[count, 'Unnamed: 0'] = df.index[i]
-                recommendation.at[count, 'mobile_number'] = df['mobile_number'][i]
-                recommendation.at[count, 'skills'] = df['skills'][i]
-                recommendation.at[count, 'no_of_pages'] = df['no_of_pages'][i]
-                recommendation.at[count, 'score'] =  scores[count]
-                count += 1
-            return recommendation
+            try:
+                recommendation = pd.DataFrame(columns = ['name', 'degree',"email",'Unnamed: 0','mobile_number','skills','no_of_pages','score'])
+                count = 0
+                for i in top:
+                    
+                    
+                    recommendation.at[count, 'name'] = df['name'][i]
+                    recommendation.at[count, 'degree'] = df['degree'][i]
+                    recommendation.at[count, 'email'] = df['email'][i]
+                    recommendation.at[count, 'Unnamed: 0'] = df.index[i]
+                    recommendation.at[count, 'mobile_number'] = df['mobile_number'][i]
+                    recommendation.at[count, 'skills'] = df['skills'][i]
+                    recommendation.at[count, 'no_of_pages'] = df['no_of_pages'][i]
+                    recommendation.at[count, 'score'] =  scores[count]
+                    count += 1
+                return recommendation
+            except Exception as e:
+                raise jobException(e, sys)
 
-        def get_cv(): #cleaned, processed, nlped cv content
-            DF=MongoDB_function.get_collection_as_dataframe(dataBase,collection)
-            return DF
 
-        df = get_cv()   
+
+        df = MongoDB_function.get_collection_as_dataframe(dataBase,collection)
+
         cv_data=[]
         for i in range(len(df["All"])):
             NLP_Processed_cv=text_preprocessing.nlp(df["All"].values[i])

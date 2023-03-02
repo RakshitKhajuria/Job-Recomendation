@@ -52,3 +52,11 @@ uiux_course = [['Google UX Design Professional Certificate','https://www.courser
                ['Adobe XD for Beginners [Free]','https://youtu.be/WEljsc2jorI'],
                ['Adobe XD in Simple Way','https://learnux.io/course/adobe-xd']]
 
+
+
+ds_keyword = ['tensorflow','keras','pytorch','machine learning','deep Learning','flask','streamlit']
+web_keyword = ['react', 'django', 'node jS', 'react js', 'php', 'laravel', 'magento', 'wordpress',
+                'javascript', 'angular js', 'c#', 'flask']
+android_keyword = ['android','android development','flutter','kotlin','xml','kivy']
+ios_keyword = ['ios','ios development','swift','cocoa','cocoa touch','xcode']
+uiux_keyword = ['ux','adobe xd','figma','zeplin','balsamiq','ui','prototyping','wireframes','storyframes','adobe photoshop','photoshop','editing','adobe illustrator','illustrator','adobe after effects','after effects','adobe premier pro','premier pro','adobe indesign','indesign','wireframe','solid','grasp','user research','user experience']
