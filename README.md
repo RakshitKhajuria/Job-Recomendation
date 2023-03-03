@@ -20,7 +20,6 @@
 * [Natural Language Processing](#natural-language-processing)
 * [Optimization](#Optimization)
 * [Conclusion](#conclusion)
-* [Next Step](#next-step)
 
 <h1 align="center">Demo</h1>
 
@@ -135,5 +134,3 @@ Some text preprocessing steps used are:
 - **Encourage candidates to become part of the CV database:** Increase the number and quality of CVs in our database by inviting the applicants.
 <h1 align="center">Conclusion</h1>
 In summary, TalentHive utilizes advanced technologies such as OCR and NLP to provide job seekers and recruiters with personalized job and candidate recommendations. Additionally, the use of Apify allows for efficient and accurate data collection, leading to up-to-date and relevant job postings. TalentHive streamlines the recruitment process, saving time and resources for both job seekers and recruiters.
-
-# Next Step
