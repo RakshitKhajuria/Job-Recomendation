@@ -121,9 +121,7 @@ Some text preprocessing steps used are:
 - Stop words removal
 - Lemmatization
 - Bigram Collection Finder
-<p align="center">
-  <img widhth = "1000"src="https://user-images.githubusercontent.com/71117423/220833252-8e844523-e321-402e-885e-417a025b7f87.png" />
-</p>
+
 
 <h1 align="center">Optimizations</h1>
 
