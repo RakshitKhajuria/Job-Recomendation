@@ -6,6 +6,9 @@
 
 <h1 align="center">Talent Hive</h1>
 
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+
 ## Table of contents
 
 * [Demo](#Demo)
@@ -21,6 +24,9 @@
 * [Optimization](#Optimization)
 * [Conclusion](#conclusion)
 
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+
 <h1 align="center">Demo</h1>
 
 https://user-images.githubusercontent.com/71117423/221504597-b8687842-f762-44e8-906d-f98543346f6e.mp4
@@ -29,6 +35,7 @@ https://user-images.githubusercontent.com/71117423/221504597-b8687842-f762-44e8-
 <h1 align="center">Problem Statement</h1>
 
 Job seekers and recruiters struggle to find the right match for open job positions, leading to a time-consuming and inefficient recruitment process. TalentHive offers a solution to this problem with its advanced technologies that provide personalized job and candidate recommendations based on qualifications and experience.
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
       
 <h1 align="center">Aim</h1>
@@ -40,6 +47,7 @@ This app is designed to assist applicants in searching for potential jobs and to
 Recruiters can use this app to post job openings, search for candidates based on their qualifications, and view applicant profiles and resumes. The app's advanced search features allow recruiters to narrow down their search to find the most qualified candidates quickly. The app also includes features for scheduling interviews and communicating with applicants directly through the app.
 
 Overall, this app is an excellent tool for both job seekers and recruiters, making the job search and hiring process more efficient and effective.
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h1 align="center">Business Values</h1>
 
