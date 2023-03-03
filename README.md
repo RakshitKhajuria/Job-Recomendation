@@ -13,6 +13,7 @@
 * [Aim](#aim)
 * [Business Values](#business-values)
 * [Solution](#proSolutioncess)
+* [Installation](#Installation)
 * [Data Collection](#data-collection)
 * [Data Preprocessing](#data-preprocessing)
 * [Optical Character Recognition](#optical-character-recognition)
@@ -66,6 +67,29 @@ To assist job seekers, the process begins with uploading their CV to TalentHive.
 </p>
 
 For recruiters, the process begins with inputting the job post into TalentHive. The job post undergoes NLP analysis alongside the CVs in the database. Using various comparison methods, TalentHive identifies the best-matching candidates for the job posting. The system then provides a list of recommended candidates to the recruiter based on their qualifications and experience.
+
+<h1 align="center">Installation</h1>
+
+- ## Cloning the Repository :
+```bash
+  git clone https://github.com/Ryzxxl/Job-Recomendation.git #Cloning The repo
+  cd Job-Recomendation
+```
+
+- ## Creating Conda Environment :
+```bash
+  conda create -n envname python=3.8
+  conda activate envname
+```
+
+- ## Installing Required Packages :
+```bash
+  pip install -r requirements.txt
+```
+- ## Streamlit
+```bash
+  streamlit run HOME.py
+```
 
 <h1 align="center">Data Collection</h1>
 <p align="center">
