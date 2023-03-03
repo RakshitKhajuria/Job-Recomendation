@@ -55,6 +55,7 @@ Overall, this app is an excellent tool for both job seekers and recruiters, maki
 - Simple to use : Drag and Drop
 - Saves time
 - Tailor-made dashboard
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h1 align="center">Solution</h1>
 
@@ -66,6 +67,8 @@ Overall, this app is an excellent tool for both job seekers and recruiters, maki
 
 To assist job seekers, the process begins with uploading their CV to TalentHive. The CV is then processed by Optical Character Recognition (OCR) technology and undergoes Natural Language Processing (NLP). The NLP process compares the uploaded CV with various job postings to determine the best match based on similarity. Finally, the system provides a list of recommended jobs that match the user's qualifications and experience.
 
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
 # RECRUITERS
 
 <p align="center">
@@ -73,6 +76,8 @@ To assist job seekers, the process begins with uploading their CV to TalentHive.
 </p>
 
 For recruiters, the process begins with inputting the job post into TalentHive. The job post undergoes NLP analysis alongside the CVs in the database. Using various comparison methods, TalentHive identifies the best-matching candidates for the job posting. The system then provides a list of recommended candidates to the recruiter based on their qualifications and experience.
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h1 align="center">Installation</h1>
 
@@ -96,6 +101,7 @@ For recruiters, the process begins with inputting the job post into TalentHive. 
 ```bash
   streamlit run HOME.py
 ```
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h1 align="center">Data Collection</h1>
 <p align="center">
@@ -103,6 +109,8 @@ For recruiters, the process begins with inputting the job post into TalentHive. 
 </p>
 
 With web scraping restricted on job search engines like Indeed, we turned to Apify to collect relevant job-related data. Utilizing Apify's advanced tools and automation capabilities, we were able to efficiently and accurately extract large volumes of data. This enabled us to provide up-to-date and precise job postings and candidate recommendations to job seekers and recruiters.
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h1 align="center">Optical Character Recognition</h1>
 <p align="center">
@@ -114,6 +122,7 @@ With web scraping restricted on job search engines like Indeed, we turned to Api
 </p>
 
 By utilizing Optical Character Recognition (OCR) technology, we were able to convert a PDF document containing textual data into a machine-encoded text format that can be further processed and analyzed in a Jupyter Notebook. OCR is an advanced technology that enables the automatic conversion of scanned documents and images into machine-encoded text that can be easily manipulated and analyzed. By leveraging OCR technology, we were able to extract valuable insights from the textual data, enabling us to gain a deeper understanding of the information contained within the document.
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h1 align="center">Natural Language Processing</h1>
 Data preprocessing is an essential step in building a Machine Learning model and depending on how well the data has been preprocessed; the results are seen.
@@ -130,6 +139,7 @@ Some text preprocessing steps used are:
 - Lemmatization
 - Bigram Collection Finder
 
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h1 align="center">Optimizations</h1>
 
