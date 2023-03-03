@@ -23,6 +23,7 @@
 * [Natural Language Processing](#natural-language-processing)
 * [Optimization](#Optimization)
 * [Conclusion](#conclusion)
+* [References](#references)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
