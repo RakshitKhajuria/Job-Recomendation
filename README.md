@@ -159,8 +159,13 @@ TalentHive utilizes advanced technologies such as OCR and NLP to provide job see
 
 <h1 align="center">references</h1>
 [link1](https://elibrary.tucl.edu.np/bitstream/123456789/10151/1/Full%20Thesis.pdf)
+
 [link2](https://www.ijraset.com/research-paper/personalized-book-recommendation-system)
+
 [link3](https://github.com/Cooper315315/Job-and-Talent-Recommendation-System)
+
 [link4](https://www.aurigait.com/blog/recommendation-system-using-knn/)
+
 [link5](https://github.com/Spidy20/Smart_Resume_Analyser_App)
+
 [link6](https://core.ac.uk/download/pdf/55305289.pdf)
