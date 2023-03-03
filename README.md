@@ -18,8 +18,7 @@
 * [Data Preprocessing](#data-preprocessing)
 * [Optical Character Recognition](#optical-character-recognition)
 * [Natural Language Processing](#natural-language-processing)
-* [Recommendations](#recommendations)
-* [Result](#result)
+* [Optimization](#Optimization)
 * [Conclusion](#conclusion)
 * [Next Step](#next-step)
 
@@ -127,10 +126,13 @@ Some text preprocessing steps used are:
   <img widhth = "1000"src="https://user-images.githubusercontent.com/71117423/220833252-8e844523-e321-402e-885e-417a025b7f87.png" />
 </p>
 
-<h1 align="center">Recommendations</h1>
------------------------------
-<h1 align="center">Result</h1>
--------------------------------
+<h1 align="center">Optimizations</h1>
+
+- **Enhance the recommendation system to deliver precise and pertinent outcomes**: Improve the recommendation system through advanced algorithms and data analysis techniques like using different deep learning Word Embeddigs.
+
+- **Establish a relationship with job posting firms to procure database/API access:** Engage with job posting companies to gain access to their databases or APIs, expanding the range of job listings available on our platform and make it realtime.
+
+- **Encourage candidates to become part of the CV database:** Increase the number and quality of CVs in our database by inviting the applicants.
 <h1 align="center">Conclusion</h1>
 In summary, TalentHive utilizes advanced technologies such as OCR and NLP to provide job seekers and recruiters with personalized job and candidate recommendations. Additionally, the use of Apify allows for efficient and accurate data collection, leading to up-to-date and relevant job postings. TalentHive streamlines the recruitment process, saving time and resources for both job seekers and recruiters.
 
