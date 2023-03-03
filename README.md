@@ -23,6 +23,7 @@
 * [Natural Language Processing](#natural-language-processing)
 * [Optimization](#Optimization)
 * [Conclusion](#conclusion)
+* [Contributors](#contributors)
 * [References](#references)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
@@ -155,6 +156,14 @@ Some text preprocessing steps used are:
 <h1 align="center">Conclusion</h1>
 In summary, 
 TalentHive utilizes advanced technologies such as OCR and NLP to provide job seekers and recruiters with personalized job and candidate recommendations. Additionally, the use of Apify allows for efficient and accurate data collection, leading to up-to-date and relevant job postings. TalentHive streamlines the recruitment process, saving time and resources for both job seekers and recruiters.
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+<h1 align="center">Contributors</h1>
+
+- [Rakshit Khajuria](https://github.com/Ryzxxl)
+- [Prikshit Sharma](https://github.com/Prikshit7766)
+
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
