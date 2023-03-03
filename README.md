@@ -146,9 +146,10 @@ Some text preprocessing steps used are:
 - **Enhance the recommendation system to deliver precise and pertinent outcomes**: Improve the recommendation system through advanced algorithms and data analysis techniques like using different deep learning Word Embeddigs.
 
 - **Establish a relationship with job posting firms to procure database/API access:** Engage with job posting companies to gain access to their databases or APIs, expanding the range of job listings available on our platform and make it realtime.
-![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 - **Encourage candidates to become part of the CV database:** Increase the number and quality of CVs in our database by inviting the applicants.
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
 <h1 align="center">Conclusion</h1>
 In summary, 
 TalentHive utilizes advanced technologies such as OCR and NLP to provide job seekers and recruiters with personalized job and candidate recommendations. Additionally, the use of Apify allows for efficient and accurate data collection, leading to up-to-date and relevant job postings. TalentHive streamlines the recruitment process, saving time and resources for both job seekers and recruiters.
