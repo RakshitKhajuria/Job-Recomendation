@@ -12,4 +12,3 @@ ENTRYPOINT ["streamlit", "run"]
 CMD ["HOME.py"]
 
 
-

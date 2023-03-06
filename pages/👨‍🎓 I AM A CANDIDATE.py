@@ -24,7 +24,6 @@ from JobRecommendation import text_preprocessing ,distance_calculation
 from  JobRecommendation.exception import jobException
 
 
-
 dataBase="Job-Recomendation"
 collection1="preprocessed_jobs_Data"
 collection2 = "Resume_from_CANDIDATE"
