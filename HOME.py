@@ -10,7 +10,10 @@ from streamlit_extras.switch_page_button import switch_page
 import pandas as pd 
 import numpy as np 
 from datetime import datetime
+
 st.set_page_config(layout="centered", page_icon='logo/logo2.png', page_title="HOMEPAGE")
+
+
 
 
 add_logo()

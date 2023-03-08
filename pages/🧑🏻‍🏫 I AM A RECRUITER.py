@@ -136,11 +136,18 @@ def app():
                 cols[i%no_of_cols].text(f"No. of Pages Resume: {final_df['no_of_pages'][i]}")
                 cols[i%no_of_cols].text(f"Email: {final_df['email'][i]}")
                 encoded_pdf=final_df['pdf_to_base64'][i]
+                cols[i%no_of_cols].markdown(f'<a href="data:application/octet-stream;base64,{encoded_pdf}" download="resume.pdf"><button style="background-color:GreenYellow;">Download Resume</button></a>', unsafe_allow_html=True)
                 embed_code = utils.show_pdf(encoded_pdf)
                 cvID=final1['Unnamed: 0'][i]
                 show_pdf=cols[i%no_of_cols].button(f"{cvID}.pdf")
                 if show_pdf:
                     st.markdown(embed_code, unsafe_allow_html=True)
+                
+                
+                            
+            
+                
+                
                 cols[i%no_of_cols].text('___________________________________________________')
 
             

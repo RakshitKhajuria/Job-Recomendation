@@ -45,8 +45,8 @@ def run():
             count_=0
 
             encoded_pdf=utils.pdf_to_base64(pdf_file)
-            embed_code=utils.show_pdf(encoded_pdf)
-            st.markdown(embed_code, unsafe_allow_html=True)
+            # embed_code=utils.show_pdf(encoded_pdf)
+            # st.markdown(embed_code, unsafe_allow_html=True)
             resume_data = ResumeParser(pdf_file).get_extracted_data()
 
             resume_data["pdf_to_base64"]=encoded_pdf
@@ -57,9 +57,10 @@ def run():
                 resume_text = utils.pdf_reader(pdf_file)
 
                 st.header("Resume Analysis")
-                st.success("Hello "+ resume_data['name'])
-                st.subheader("Your Basic info")
+
                 try:
+                    st.success("Hello "+ resume_data['name'])
+                    st.subheader("Your Basic info")
                     st.text('Name: '+resume_data['name'])
                     st.text('Email: ' + resume_data['email'])
                     st.text('Contact: ' + resume_data['mobile_number'])
