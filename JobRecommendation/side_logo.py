@@ -29,7 +29,7 @@ import streamlit as st
 
 # You can always call this function where ever you want
 
-def add_logo(logo_path="logo/image.png", width=300, height=100):
+def add_logo(logo_path=r"logo/image.png", width=300, height=100):
     st.markdown(
         """
         <style>
