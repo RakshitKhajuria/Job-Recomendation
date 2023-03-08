@@ -60,7 +60,6 @@ def generateUniqueFileName():
 def show_pdf(encoded_pdf:str):
     try:
         embed_code =f'<iframe src="data:application/pdf;base64,{encoded_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
-
         return embed_code
     except Exception as e:
         raise jobException(e, sys)
