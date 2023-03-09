@@ -33,6 +33,13 @@
 
 https://user-images.githubusercontent.com/71117423/221504597-b8687842-f762-44e8-906d-f98543346f6e.mp4
 
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+
+<h1 align="center">Deployment</h1>
+
+## Deployment URL : https://ryzxxl-job-recomendation-home-lclfm4.streamlit.app/
+
 
 <h1 align="center">Problem Statement</h1>
 
