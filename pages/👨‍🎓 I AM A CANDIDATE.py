@@ -33,7 +33,7 @@ collection3 = "all_locations_Data"
 
 st.set_page_config(layout="wide", page_icon='logo/logo2.png', page_title="CANDIDATE")
 
-url = load_lottieurl("https://assets2.lottiefiles.com/packages/lf20_cDUGLTDdfh.json")
+url = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_x62chJ.json")
 add_logo()
 sidebar()
 
@@ -57,12 +57,12 @@ def app():
    
  
     # number of job recommend slider------------------display##
-    no_of_jobs = st.slider('Number of Job Recommendations:', min_value=10, max_value=100, step=10)
+    no_of_jobs = st.slider('Number of Job Recommendations:', min_value=1, max_value=100, step=10)
 
     if cv is not None:
         if st.button('Proceed Further !! '):
             with st_lottie_spinner(url, key="download",    reverse=True,speed=1,loop=True,quality='high',):
-                time.sleep(20)
+                time.sleep(10)
                 try:
                     count_=0
                     cv_text = utils.extract_data(cv) # (OCR function)
