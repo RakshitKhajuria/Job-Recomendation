@@ -18,6 +18,7 @@
 * [Solution](#proSolutioncess)
 * [Installation](#Installation)
 * [Data Collection](#data-collection)
+* [MongoDB](#MongoDB)
 * [Data Preprocessing](#data-preprocessing)
 * [Optical Character Recognition](#optical-character-recognition)
 * [Natural Language Processing](#natural-language-processing)
@@ -31,10 +32,9 @@
 
 <h1 align="center">Demo</h1>
 
-https://user-images.githubusercontent.com/71117423/221504597-b8687842-f762-44e8-906d-f98543346f6e.mp4
+Uploading bandicam 2023-03-09 16-51-13-023 (1).mp4…
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
-
 
 <h1 align="center">Deployment</h1>
 
@@ -44,6 +44,7 @@ https://user-images.githubusercontent.com/71117423/221504597-b8687842-f762-44e8-
 <h1 align="center">Problem Statement</h1>
 
 Job seekers and recruiters struggle to find the right match for open job positions, leading to a time-consuming and inefficient recruitment process. TalentHive offers a solution to this problem with its advanced technologies that provide personalized job and candidate recommendations based on qualifications and experience.
+
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
       
@@ -118,6 +119,14 @@ For recruiters, the process begins with inputting the job post into TalentHive. 
 </p>
 
 With web scraping restricted on job search engines like Indeed, we turned to Apify to collect relevant job-related data. Utilizing Apify's advanced tools and automation capabilities, we were able to efficiently and accurately extract large volumes of data. This enabled us to provide up-to-date and precise job postings and candidate recommendations to job seekers and recruiters.
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+
+<h1 align="center">MongoDB</h1>
+
+We are retrieving  data from a MongoDB database job recommendation, which is comprised of three distinct collections: Resume_Data, all_locations_Data, and preprocessed_jobs_Data whhere as there are two more collection inside the same database which are Resume_from_CANDIDATE and Resume_from_RESUME_ANALYZER in order to store resumes entered by users on the job recommendation and resume analyzer pages. These collections will serve as a repository for user-provided resumes, allowing for more personalized and accurate job recommendations and analysis.
+
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
