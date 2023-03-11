@@ -15,6 +15,7 @@
 * [Probmen Statement](#Problem-Statement)
 * [Aim](#aim)
 * [Business Values](#business-values)
+* [Project Flow](#projectflow)
 * [Solution](#proSolutioncess)
 * [Installation](#Installation)
 * [Data Collection](#data-collection)
@@ -71,6 +72,10 @@ Overall, this app is an excellent tool for both job seekers and recruiters, maki
 - Simple to use : Drag and Drop
 - Saves time
 - Tailor-made dashboard
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+<h1 align="center">Project Flow</h1>
+![arch](https://user-images.githubusercontent.com/71117423/224474003-f2916799-12c9-4323-8908-70f88821ed91.png)
+
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h1 align="center">Solution</h1>
