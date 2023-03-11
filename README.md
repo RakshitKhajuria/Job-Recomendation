@@ -101,6 +101,10 @@ To assist job seekers, the process begins with uploading their CV to TalentHive.
 
 For recruiters, the process begins with inputting the job post into TalentHive. The job post undergoes NLP analysis alongside the CVs in the database. Using various comparison methods, TalentHive identifies the best-matching candidates for the job posting. The system then provides a list of recommended candidates to the recruiter based on their qualifications and experience.
 
+# RESUME ANALYZER
+
+To extract user information from a resume, various features are analyzed. Firstly, the resume score is calculated based on the completeness of the information provided, the relevance to the job, and the overall layout. Career recommendations are then suggested based on the user's experience and education, which can help them target the right job opportunities. Additionally, resume writing tips are provided to improve the resume's overall effectiveness. Courses recommendations are also suggested based on the user's education and job preferences, which can help them acquire new skills and knowledge. Finally, skills recommendations are suggested based on the user's work experience and industry trends, which can help them stay competitive in the job market.
+
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 <h1 align="center">Installation</h1>
