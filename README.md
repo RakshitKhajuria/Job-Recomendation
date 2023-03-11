@@ -74,7 +74,10 @@ Overall, this app is an excellent tool for both job seekers and recruiters, maki
 - Tailor-made dashboard
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 <h1 align="center">Project Flow</h1>
-![arch](https://user-images.githubusercontent.com/71117423/224474003-f2916799-12c9-4323-8908-70f88821ed91.png)
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/71117423/224474003-f2916799-12c9-4323-8908-70f88821ed91.png" />
+</p>
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
