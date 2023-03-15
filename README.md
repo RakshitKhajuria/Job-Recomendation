@@ -207,7 +207,5 @@ Here are some resources that helped me while working on this project:
 
 - [My thesis on recommendation systems](https://elibrary.tucl.edu.np/bitstream/123456789/10151/1/Full%20Thesis.pdf)
 - [Personalized book recommendation system research paper](https://www.ijraset.com/research-paper/personalized-book-recommendation-system)
-- [Job and talent recommendation system code](https://github.com/Cooper315315/Job-and-Talent-Recommendation-System)
 - [Recommendation system using KNN blog post](https://www.aurigait.com/blog/recommendation-system-using-knn/)
-- [Smart Resume Analyser App code](https://github.com/Spidy20/Smart_Resume_Analyser_App)
 - [Downloadable paper on recommendation systems](https://core.ac.uk/download/pdf/55305289.pdf)
