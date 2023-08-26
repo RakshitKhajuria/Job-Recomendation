@@ -3,7 +3,7 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/71117423/220821338-b3337130-9c75-4628-9922-df343020a01e.png" />
 </p>    
-       
+          
 <h1 align="center">Talent Hive</h1>       
 
   
